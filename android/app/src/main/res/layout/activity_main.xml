@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:lineSpacingMultiplier="1.3"
-            android:text="Add the widget to your home screen:\n\n1. Go to your home screen.\n2. Press and hold an empty space.\n3. Tap Widgets.\n4. Find Gold Forecast, then press and drag it onto your screen.\n\nIt shows tonight's call (lock in, wait or no strong view), Mastermelt's prices and tomorrow's likely range, and updates itself every 30 minutes. Tap ↻ on the widget to refresh now, or tap the widget to open the full app."
+            android:text="Add the widget to your home screen:\n\n1. Go to your home screen.\n2. Press and hold an empty space.\n3. Tap Widgets.\n4. Find Gold Forecast, then press and drag it onto your screen.\n\nIt shows tonight\'s call (lock in, wait or no strong view), Mastermelt\'s prices and tomorrow\'s likely range, and updates itself every 30 minutes. Tap ↻ on the widget to refresh now, or tap the widget to open the full app."
             android:textColor="#F3EFE6"
             android:textSize="16sp" />
 
