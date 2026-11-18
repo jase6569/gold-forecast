@@ -29,3 +29,7 @@ jobs:
           git add web/data/mastermelt.json web/data/widget.json
           git diff --cached --quiet || git commit -m "Mastermelt $(date -u +%F)"
           git pull --rebase && git push
+      - name: Update the app
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: if [ -n "$HOOK" ]; then curl -s -X POST "$HOOK" > /dev/null && echo "App update requested"; else echo "No VERCEL_DEPLOY_HOOK set"; fi

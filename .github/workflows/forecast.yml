@@ -40,3 +40,7 @@ jobs:
           git add web/data web/report.html 2>/dev/null || true
           git diff --cached --quiet || git commit -m "Forecast $(date -u +%F)"
           git pull --rebase && git push
+      - name: Update the app
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: if [ -n "$HOOK" ]; then curl -s -X POST "$HOOK" > /dev/null && echo "App update requested"; else echo "No VERCEL_DEPLOY_HOOK set"; fi
