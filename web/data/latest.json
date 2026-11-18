@@ -1,75 +1,109 @@
 {
- "generated_utc": "2026-11-18T13:14+00:00",
+ "generated_utc": "2026-11-18T13:23+00:00",
  "price_date": "2026-11-18",
  "selftest": false,
  "call": "HOLD",
  "strength": "Strong",
- "prob_up_tomorrow": 0.6049,
- "prob_up_5d": 0.5957,
+ "prob_up_tomorrow": 0.5887,
+ "prob_up_5d": 0.5858,
  "backtest_right_tomorrow": 0.5598526703499079,
  "backtest_right_5d": 0.5405304445274561,
  "price": {
-  "per_oz": 2852.84,
-  "per_gram": 91.72,
-  "change_pct": -2.7
+  "per_oz": 2864.91,
+  "per_gram": 92.11,
+  "change_pct": -2.28
  },
  "today": [
-  "Gold fell 2.8% in dollars and the pound weakened 0.1%, so in pounds gold fell 2.7%."
+  "Gold fell 2.4% in dollars and the pound weakened 0.1%, so in pounds gold fell 2.3%."
  ],
  "reasons": [
-  "Today's move -2.7%, pointing up",
-  "Close within day's range +0.11, pointing up",
-  "Gold in dollars, today -2.8%, pointing down",
+  "Today's move -2.3%, pointing up",
+  "Gold in dollars, today -2.4%, pointing down",
+  "Close within day's range +0.24, pointing up",
   "Big announcement due: GBP BOE Gov Bailey Speaks. Expect a bigger swing either way"
  ],
  "levels": {
-  "expected_low": 2775.98,
-  "expected_high": 2929.71,
+  "expected_low": 2788.08,
+  "expected_high": 2941.75,
   "high_20d": 3111.96,
-  "low_20d": 2843.13,
-  "sma50": 3110.5,
-  "sma200": 3322.22,
+  "low_20d": 2843.57,
+  "sma50": 3110.75,
+  "sma200": 3322.29,
   "high_52w": 4053.3
  },
- "rsi14": 33.4,
+ "rsi14": 34.2,
+ "mastermelt": {
+  "date": "2026-11-18",
+  "ok": true,
+  "pct_of_spot": 96.9,
+  "prices": {
+   "9ct": 33.47,
+   "14ct": 52.21,
+   "18ct": 66.94,
+   "22ct": 81.75,
+   "24ct": 89.25
+  },
+  "tomorrow": {
+   "9ct": [
+    32.57,
+    34.37
+   ],
+   "14ct": [
+    50.81,
+    53.61
+   ],
+   "18ct": [
+    65.14,
+    68.74
+   ],
+   "22ct": [
+    79.56,
+    83.94
+   ],
+   "24ct": [
+    86.86,
+    91.64
+   ]
+  }
+ },
  "news": {
   "tone": "negative",
-  "summary": "Gold has dropped sharply and hit one\u2011year lows. Headlines point to a stronger dollar from hawkish Fed signals and broad market selling, including crypto.",
+  "summary": "Gold has fallen sharply and is trading near one\u2011year lows. Headlines point to a stronger dollar and a broad sell\u2011off in metals and crypto as the main reasons.",
   "drivers": [
-   "Hawkish Fed / stronger US dollar",
-   "Broad market sell\u2011off (crypto included)",
-   "Sharp recent price falls / profit\u2011taking"
+   "Hawkish Fed / dollar rally",
+   "Broad metals sell\u2011off",
+   "Cryptocurrency rout"
   ],
   "headlines": [
    {
     "title": "Gold price today: Gold falls 2.02% on November 18, 2026",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda4bc127b44c281ab9ce5736da8b5&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2finvestment%2fgold-price-today-gold-falls-2-02-on-november-18-2026%2far-AA2hGEiK&c=4961398644371970150&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2finvestment%2fgold-price-today-gold-falls-2-02-on-november-18-2026%2far-AA2hGEiK&c=4961398644371970150&mkt=en-us"
    },
    {
     "title": "BTC Price Drops 15% as Gold and Silver Dump: Can December\u2019s Fed Decision Turn It?",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda4bc127b44c281ab9ce5736da8b5&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcrypto%2farticles%2fbtc-price-drops-15-gold-093459090.html&c=13387336568634802313&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcrypto%2farticles%2fbtc-price-drops-15-gold-093459090.html&c=13387336568634802313&mkt=en-us"
    },
    {
     "title": "Gold price today on November 17, 2026",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda4bc127b44c281ab9ce5736da8b5&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2fgeneral%2fgold-price-today-on-november-17-2026%2far-AA2hD5hK&c=4221719586567380983&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2fgeneral%2fgold-price-today-on-november-17-2026%2far-AA2hD5hK&c=4221719586567380983&mkt=en-us"
    },
    {
     "title": "Why gold and silver prices have fallen to their lowest in over a year",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda4bc127b44c281ab9ce5736da8b5&url=https%3a%2f%2fwww.msn.com%2fen-sg%2fnews%2fother%2fwhy-gold-and-silver-prices-have-fallen-to-their-lowest-in-over-a-year%2far-AA2hCMAm&c=9421143410276981296&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.msn.com%2fen-sg%2fnews%2fother%2fwhy-gold-and-silver-prices-have-fallen-to-their-lowest-in-over-a-year%2far-AA2hCMAm&c=9421143410276981296&mkt=en-us"
    },
    {
     "title": "Gold drops 2% to over one-year low as hawkish Fed signals boost dollar",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda4bc127b44c281ab9ce5736da8b5&url=https%3a%2f%2fwww.cnbc.com%2f2026%2f11%2f18%2fgold-slides-to-over-one-year-low-on-firm-dollar-us-rate-outlook.html&c=12813295345829316409&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.cnbc.com%2f2026%2f11%2f18%2fgold-slides-to-over-one-year-low-on-firm-dollar-us-rate-outlook.html&c=12813295345829316409&mkt=en-us"
    },
    {
     "title": "Gold prices have fallen nearly 8% in a month. What will drive the next move?",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda4bc127b44c281ab9ce5736da8b5&url=https%3a%2f%2fwww.moneycontrol.com%2fnews%2fbusiness%2fpersonal-finance%2fgold-prices-have-fallen-nearly-8-in-a-month-what-will-drive-the-next-move-14083037.html&c=15348627185044795293&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.moneycontrol.com%2fnews%2fbusiness%2fpersonal-finance%2fgold-prices-have-fallen-nearly-8-in-a-month-what-will-drive-the-next-move-14083037.html&c=15348627185044795293&mkt=en-us"
    }
   ]
  },
@@ -445,7 +479,7 @@
   ],
   [
    "2026-11-18",
-   2852.84
+   2864.91
   ]
  ]
 }
