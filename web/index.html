@@ -148,6 +148,11 @@ async function load(){
   const [L,H,B,M]=await Promise.all([get('data/latest.json'),get('data/history.json'),get('data/backtest.json'),get('data/mastermelt.json')]);
   const app=document.getElementById('app');
   if(!L){app.innerHTML='<div class="card">No forecast yet. The first one arrives after tonight\'s run.</div>';return}
+  // One source for every Mastermelt range, so all cards agree to the penny
+  if(L.mastermelt&&L.mastermelt.prices&&L.ranges&&L.ranges.h1){
+    const lo=L.ranges.h1.lo/L.price.per_gram, hi=L.ranges.h1.hi/L.price.per_gram;
+    L.mastermelt.tomorrow=Object.fromEntries(Object.entries(L.mastermelt.prices).map(([k,v])=>[k,[v*lo,v*hi]]));
+  }
   if(M&&M.prices&&(!L.mastermelt||M.date>L.mastermelt.date)){
     const r=L.ranges&&L.ranges.h1, lo=r?r.lo/L.price.per_gram:0.99, hi=r?r.hi/L.price.per_gram:1.01;
     L.mastermelt={date:M.date,ok:M.ok,pct_of_spot:(M.pure_g/L.price.per_gram*100).toFixed(1),prices:M.prices,
@@ -172,7 +177,7 @@ async function load(){
     ${Object.entries(L.mastermelt.prices).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${gbp(v,2)}</td><td>${gbp(L.mastermelt.tomorrow[k][0],2)} to ${gbp(L.mastermelt.tomorrow[k][1],2)}</td></tr>`).join('')}</table>
     <p class="small">Per gram. Mastermelt's trade counter price from ${esc(L.mastermelt.date)}, about ${L.mastermelt.pct_of_spot}% of the live gold price.${L.mastermelt.ok?'':' Their page couldn\'t be read, so this is the last good price.'} The likely range catches the real price about 3 times in 4.</p></div>`:''}
   <div class="card"><h2>Likely Mastermelt 24ct price (per gram)</h2><table>
-    ${R.h1?`<tr><td>Tomorrow</td><td>${pg(R.h1.lo)} to ${pg(R.h1.hi)}</td></tr>`:''}
+    ${R.h1?`<tr><td>Tomorrow</td><td>${L.mastermelt?gbp(L.mastermelt.tomorrow['24ct'][0],2)+' to '+gbp(L.mastermelt.tomorrow['24ct'][1],2):pg(R.h1.lo)+' to '+pg(R.h1.hi)}</td></tr>`:''}
     ${R.h5?`<tr><td>Within a week</td><td>${pg(R.h5.lo)} to ${pg(R.h5.hi)}</td></tr>`:''}</table>
     <p class="small">${RH.h1?`Tested since 2008: tomorrow's range caught the real price ${pc(RH.h1)} of the time, the week range ${pc(RH.h5)}.`:'Aimed to catch the real price 3 times in 4.'}</p></div>
   <div class="card"><h2>How sure</h2>${meter('Tomorrow',L.prob_up_tomorrow,L.backtest_right_tomorrow)}

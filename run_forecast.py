@@ -130,7 +130,13 @@ def notify(latest: dict):
         price_line = f"Mastermelt 9ct £{p.get('9ct', 0):.2f}/g, 18ct £{p.get('18ct', 0):.2f}/g. "
     else:
         price_line = f"24ct £{latest['price']['per_gram']:.2f}/g. "
-    body = price_line + (latest["reasons"][0] if latest["reasons"] else "")
+    if mm and mm.get("tomorrow", {}).get("9ct"):
+        lo9, hi9 = mm["tomorrow"]["9ct"]
+        price_line += f"Tomorrow 9ct likely £{lo9:.2f} to £{hi9:.2f}. "
+    if call == "NO STRONG VIEW":
+        body = price_line + "No action needed tonight; follow your batch plan."
+    else:
+        body = price_line + (latest["reasons"][0] if latest["reasons"] else "")
     tags = {"WAIT": "chart_with_upwards_trend", "LOCK IN": "lock"}.get(call, "zzz")
     headers = {"Title": title, "Tags": tags, "Priority": "4" if latest["strength"] == "Strong" else "3"}
     if os.environ.get("APP_URL"):
