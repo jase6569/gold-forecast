@@ -30,7 +30,23 @@ The self-test feeds the engine pure random prices. A sound engine can't find an 
 
 A second check plants a small real pattern in random data, and the engine finds it. That proves it can see a genuine edge when one exists.
 
-## Next stages
+## How it runs
 
-2. The evening job runs on Google Cloud (Cloud Run job, europe-west2). It runs after the London close, with OpenAI reading the day's gold news and the economic calendar.
-3. The phone app (installable, Android first) shows the evening verdict, confidence, levels to watch, reasons and the live track record, with a notification each evening.
+GitHub Actions does everything on GitHub's servers:
+
+`forecast.yml` runs at 22:15 UTC, Monday to Friday. It pulls prices, works out tomorrow's verdict, has OpenAI read the day's gold news, checks the calendar for big US and UK announcements, scores past calls, saves to `web/data`, and sends a phone notification through ntfy. `backtest.yml` runs every Sunday. It runs the self-test, then re-runs the full backtest so the model's track record stays current.
+
+The phone app is the static site in `web/`, hosted on Vercel. It redeploys automatically each time the bot saves a new forecast. To install it, open it in Chrome on Android, then tap the menu and choose "Add to Home screen".
+
+## Settings (GitHub repo, Settings, Secrets and variables, Actions)
+
+| Name | Type | Value |
+|---|---|---|
+| OPENAI_API_KEY | Secret | Your OpenAI key |
+| NTFY_TOPIC | Secret | Private notification channel name (subscribe to the same name in the ntfy app) |
+| APP_URL | Variable | Your Vercel address, so tapping the notification opens the app |
+| OPENAI_MODEL | Variable (optional) | Defaults to gpt-5-mini |
+
+## Giving Mike his own copy later
+
+Mike gets his own repo copy with his own NTFY_TOPIC and his own Vercel site. His alerts never reach you, and yours never reach him.

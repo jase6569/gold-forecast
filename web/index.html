@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1c1a17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Gold Forecast</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#f7f3ea;--card:#fff;--ink:#1c1a17;--muted:#7a7266;--gold:#a07a1c;--gold-soft:#f1e6c8;--hold:#2f6b3a;--hold-soft:#e3f0e4;--sell:#9a5b0f;--sell-soft:#f8e9d2;--none:#5f5f5f;--none-soft:#ececec;--line:#ece5d6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) 0 40px}
+header{background:var(--ink);color:#f3ead6;padding:18px 18px 56px}
+header .row{display:flex;justify-content:space-between;align-items:baseline}
+header h1{font-size:17px;font-weight:600;margin:0;letter-spacing:.3px}
+header .date{font-size:13px;color:#bdb29b}
+header .price{font-size:34px;font-weight:700;margin-top:14px}
+header .per{font-size:14px;color:#d8cdb5}
+.chg.up{color:#8fd19e}.chg.down{color:#f0a37a}
+main{padding:0 14px;margin-top:-42px}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.verdict{text-align:center;padding:22px 16px}
+.verdict .label{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted)}
+.verdict .call{font-size:30px;font-weight:800;margin:6px 0 2px;letter-spacing:.5px}
+.verdict .strength{font-size:14px;font-weight:600}
+.verdict.HOLD{background:var(--hold-soft)}.verdict.HOLD .call,.verdict.HOLD .strength{color:var(--hold)}
+.verdict.SELL{background:var(--sell-soft)}.verdict.SELL .call,.verdict.SELL .strength{color:var(--sell)}
+.verdict.NONE{background:var(--none-soft)}.verdict.NONE .call{color:var(--none)}
+.verdict p{margin:10px 0 0;font-size:14px;color:#3d3830}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin:0 0 10px}
+.meter{margin:8px 0 12px}
+.meter .top{display:flex;justify-content:space-between;font-size:13px}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:4px;position:relative}
+.bar i{display:block;height:100%;background:var(--gold);border-radius:4px}
+.bar b{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:#999}
+.small{font-size:12.5px;color:var(--muted)}
+ul.reasons{margin:0;padding-left:18px}ul.reasons li{margin:4px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td{padding:7px 0;border-bottom:1px solid var(--line)}td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.tone{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12px;font-weight:600;background:var(--none-soft)}
+.tone.supportive{background:var(--hold-soft);color:var(--hold)}.tone.negative{background:var(--sell-soft);color:var(--sell)}
+a{color:var(--gold)}
+.heads a{display:block;padding:6px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);font-size:13.5px}
+.heads a span{color:var(--muted);font-size:12px}
+.track .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.ok{color:var(--hold);font-weight:700}.bad{color:#b23b2a;font-weight:700}.pend{color:var(--muted)}
+.big{font-size:26px;font-weight:700}
+.warn{background:#fdecea;color:#7a2418;padding:10px 12px;border-radius:10px;font-size:13px;margin-bottom:12px}
+svg{display:block;width:100%;height:80px}
+footer{text-align:center;font-size:12px;color:var(--muted);padding:8px 20px}
+</style>
+</head>
+<body>
+<header>
+  <div class="row"><h1>UK Gold Forecast</h1><span class="date" id="date">Loading…</span></div>
+  <div class="price" id="price">£–</div>
+  <div class="per"><span id="gram"></span> <span id="chg" class="chg"></span></div>
+</header>
+<main id="app"><div class="card">Loading tonight's forecast…</div></main>
+<footer>One input to your own decision, not financial advice. Daily UK gold in pounds only.</footer>
+<script>
+const gbp = (v, d = 0) => '£' + Number(v).toLocaleString('en-GB', {minimumFractionDigits: d, maximumFractionDigits: d});
+const pc = v => (v * 100).toFixed(0) + '%';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function get(p){try{const r=await fetch(p+'?t='+Date.now());return r.ok?await r.json():null}catch(e){return null}}
+
+function spark(points){
+  if(!points||points.length<2) return '';
+  const v=points.map(p=>p[1]),mn=Math.min(...v),mx=Math.max(...v),w=300,h=80;
+  const xy=v.map((y,i)=>[(i/(v.length-1))*w,h-6-((y-mn)/(mx-mn||1))*(h-12)]);
+  const d='M'+xy.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join('L');
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><path d="${d}L${w},${h}L0,${h}Z" fill="#f1e6c8"/><path d="${d}" fill="none" stroke="#a07a1c" stroke-width="2"/></svg>
+  <div class="small" style="display:flex;justify-content:space-between"><span>${points[0][0]}</span><span>Low ${gbp(mn)} · High ${gbp(mx)}</span><span>${points.at(-1)[0]}</span></div>`;
+}
+
+function meter(label, p, right){
+  return `<div class="meter"><div class="top"><span>${label}</span><b>${pc(p)} chance up</b></div>
+  <div class="bar"><i style="width:${(p*100).toFixed(0)}%"></i><b></b></div>
+  ${right!=null?`<div class="small">When it's been this sure before, it was right ${pc(right)} of the time.</div>`:''}</div>`;
+}
+
+function blurb(L){
+  if(L.call==='HOLD') return 'The odds lean towards a higher price over the next few days. Holding looks the better bet.';
+  if(L.call==='SELL TOMORROW') return 'The odds lean towards a softer price tomorrow and no clear lift this week. Selling tomorrow looks sensible.';
+  return 'No proven edge either way tonight. Sell or hold on your normal routine.';
+}
+
+function track(H){
+  const done=(H||[]).filter(h=>h.scored&&h.right!==undefined);
+  const recent=(H||[]).slice(-15).reverse();
+  if(!recent.length) return '<p class="small">The track record starts filling in after the first few evenings.</p>';
+  const wins=done.filter(h=>h.right).length;
+  const head=done.length?`<div><span class="big">${pc(wins/done.length)}</span> <span class="small">right on ${done.length} scored calls (sell judged next day, hold judged after 5 days)</span></div>`:'';
+  return head+'<div class="track">'+recent.map(h=>{
+    const mark=h.right===true?'<span class="ok">✓ Right</span>':h.right===false?'<span class="bad">✗ Wrong</span>':h.call==='NO CLEAR CALL'?'<span class="pend">No call</span>':'<span class="pend">Waiting</span>';
+    return `<div class="row"><span>${h.date}</span><span>${esc(h.call.toLowerCase())}</span><span>${gbp(h.close)}</span>${mark}</div>`}).join('')+'</div>';
+}
+
+async function load(){
+  const [L,H,B]=await Promise.all([get('data/latest.json'),get('data/history.json'),get('data/backtest.json')]);
+  const app=document.getElementById('app');
+  if(!L){app.innerHTML='<div class="card">No forecast yet. The first one arrives after tonight\'s run.</div>';return}
+  const cls=L.call==='HOLD'?'HOLD':L.call==='SELL TOMORROW'?'SELL':'NONE';
+  document.getElementById('date').textContent='Prices to '+new Date(L.price_date).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+  document.getElementById('price').textContent=gbp(L.price.per_oz)+' /oz';
+  document.getElementById('gram').textContent=gbp(L.price.per_gram,2)+' per gram (24ct)';
+  const c=document.getElementById('chg');c.textContent=(L.price.change_pct>=0?'▲ ':'▼ ')+Math.abs(L.price.change_pct).toFixed(2)+'% today';c.className='chg '+(L.price.change_pct>=0?'up':'down');
+  const lv=L.levels,n=L.news;
+  app.innerHTML=`
+  ${L.selftest?'<div class="warn">Test data only. Real forecasts start after the first live run.</div>':''}
+  <div class="card verdict ${cls}"><div class="label">Tomorrow</div><div class="call">${esc(L.call)}</div>
+    <div class="strength">${L.strength?esc(L.strength)+' signal':''}</div><p>${blurb(L)}</p></div>
+  <div class="card"><h2>How sure</h2>${meter('Tomorrow',L.prob_up_tomorrow,L.backtest_right_tomorrow)}${meter('Next 5 days',L.prob_up_5d,L.backtest_right_5d)}</div>
+  <div class="card"><h2>Why</h2><ul class="reasons">${L.reasons.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
+    ${L.today.length?`<p class="small" style="margin-top:10px">${esc(L.today[0])}</p>`:''}</div>
+  <div class="card"><h2>Levels to watch</h2><table>
+    <tr><td>Likely range tomorrow</td><td>${gbp(lv.expected_low)} to ${gbp(lv.expected_high)}</td></tr>
+    <tr><td>20-day high</td><td>${gbp(lv.high_20d)}</td></tr>
+    <tr><td>20-day low</td><td>${gbp(lv.low_20d)}</td></tr>
+    <tr><td>50-day average</td><td>${gbp(lv.sma50)}</td></tr>
+    <tr><td>200-day average</td><td>${gbp(lv.sma200)}</td></tr>
+    <tr><td>1-year high</td><td>${gbp(lv.high_52w)}</td></tr>
+    <tr><td>RSI (14)</td><td>${L.rsi14}</td></tr></table></div>
+  <div class="card"><h2>Last 90 days</h2>${spark(L.spark)}</div>
+  ${L.events&&L.events.length?`<div class="card"><h2>Big announcements due</h2><table>${L.events.map(e=>`<tr><td>${esc(e.country)} ${esc(e.title)}</td><td>${new Date(e.when_utc).toLocaleString('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit'})}</td></tr>`).join('')}</table><p class="small">These can swing the price sharply either way.</p></div>`:''}
+  ${n?`<div class="card"><h2>Today's news <span class="tone ${esc(n.tone)}">${esc(n.tone)}</span></h2><p style="margin-top:0">${esc(n.summary)}</p>
+    <div class="heads">${(n.headlines||[]).map(h=>`<a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a>`).join('')}</div>
+    <p class="small">News is shown for context. It isn't part of the tested model.</p></div>`:''}
+  <div class="card"><h2>Track record</h2>${track(H)}</div>
+  ${B?`<div class="card"><h2>Backtest</h2><p style="margin:0 0 6px">Tested on daily gold in pounds, ${esc(B.from.slice(0,4))} to ${esc(B.to.slice(0,4))}. Tomorrow's direction right <b>${pc(B.h1.accuracy)}</b> of the time, against ${pc(B.h1.always_up)} for always saying up.</p><a href="report.html">Full backtest report</a></div>`:''}
+  <p class="small" style="text-align:center">Updated ${new Date(L.generated_utc).toLocaleString('en-GB')}</p>`;
+}
+load();
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>

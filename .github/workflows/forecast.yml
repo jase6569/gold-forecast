@@ -1,0 +1,42 @@
+name: Evening forecast
+
+on:
+  schedule:
+    # 22:15 UTC Mon to Fri, after the daily gold close (10:15pm UK in winter, 11:15pm in summer)
+    - cron: "15 22 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-data
+  cancel-in-progress: false
+
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Backtest first if it has never run
+        run: test -f web/data/backtest.json || python run_stage1.py
+      - name: Tonight's forecast
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          APP_URL: ${{ vars.APP_URL }}
+        run: python run_forecast.py
+      - name: Save results
+        run: |
+          git config user.name "gold-forecast-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add web/data web/report.html 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "Forecast $(date -u +%F)"
+          git pull --rebase && git push

@@ -144,6 +144,9 @@ def build_report(series, f, rules, ic, preds, ev, selftest: bool) -> str:
     summary.append(f"<p>The combined model called tomorrow's direction right <b>{pct(acc)}</b> of the time, "
                    f"against <b>{pct(up)}</b> for simply saying \"up\" every day. "
                    f"On its strong-signal days ({strong_days:,} of them) it was right <b>{pct(strong_right)}</b>.</p>")
+    e5 = ev["h5"]
+    summary.append(f"<p>Looking a week ahead (useful for \"hold until it goes up\"), it called the 5-day direction right "
+                   f"<b>{pct(e5['accuracy'])}</b> of the time, against <b>{pct(e5['always_up_accuracy'])}</b> for always saying up.</p>")
     summary.append(f"<p>For selling: on days it flagged \"sell tomorrow\", gold moved {ev['sell_days_avg_next_pct']:+.3f}% the next day "
                    f"on average. On \"hold\" days it moved {ev['hold_days_avg_next_pct']:+.3f}%. "
                    f"The average day was {ev['all_days_avg_next_pct']:+.3f}%.</p>")
@@ -200,10 +203,28 @@ def main():
     ic = information_coefficients(f, cols, t["fwd_ret_1"], split)
     preds = walk_forward(f, cols, t["up_1"], t["fwd_ret_1"], horizon=1)
     ev = evaluate_predictions(preds, t["fwd_ret_1"])
+    preds5 = walk_forward(f, cols, t["up_5"], t["fwd_ret_5"], horizon=5)
+    ev5 = evaluate_predictions(preds5, t["fwd_ret_5"])
+    ev["h5"] = ev5
 
     out = Path(args.out) if args.out else ROOT / "reports" / ("selftest.html" if args.selftest else "stage1_report.html")
     out.parent.mkdir(exist_ok=True)
-    out.write_text(build_report(series, f, rules, ic, preds, ev, args.selftest))
+    html = build_report(series, f, rules, ic, preds, ev, args.selftest)
+    out.write_text(html)
+    if not args.selftest:
+        web = ROOT / "web"
+        (web / "data").mkdir(parents=True, exist_ok=True)
+        (web / "report.html").write_text(html)
+
+        def pack(e):
+            b = e["bands"].replace({np.nan: None})
+            return {"accuracy": e["accuracy"], "always_up": e["always_up_accuracy"], "auc": e["auc"],
+                    "days": e["n_days"], "bands": b.to_dict(orient="records")}
+        (web / "data" / "backtest.json").write_text(json.dumps({
+            "generated": date.today().isoformat(), "from": str(f.index[0].date()), "to": str(f.index[-1].date()),
+            "h1": pack(ev), "h5": pack(ev5),
+            "rules_passing": [r.description for r in rules if rule_verdict(r) == "Works, and held up"],
+        }, indent=1, default=float))
 
     summary = {
         "days": len(f), "accuracy": round(ev["accuracy"], 4), "always_up": round(ev["always_up_accuracy"], 4),

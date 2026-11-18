@@ -241,7 +241,7 @@ def evaluate_predictions(p: pd.DataFrame, fwd: pd.Series, col: str = "ensemble")
                             (0.52, 0.55, "Lean up"), (0.55, 1.01, "Strong up")]:
         m = (prob >= lo_) & (prob < hi_)
         if m.sum() == 0:
-            bands.append({"band": label, "days": 0, "share": 0, "right": np.nan, "avg_next_day_pct": np.nan})
+            bands.append({"band": label, "lo": lo_, "hi": hi_, "days": 0, "share": 0, "right": np.nan, "avg_next_day_pct": np.nan})
             continue
         if label == "No clear call":
             right = np.nan
@@ -249,7 +249,7 @@ def evaluate_predictions(p: pd.DataFrame, fwd: pd.Series, col: str = "ensemble")
             right = (y[m] == 0).mean()
         else:
             right = (y[m] == 1).mean()
-        bands.append({"band": label, "days": int(m.sum()), "share": m.mean(), "right": right,
+        bands.append({"band": label, "lo": lo_, "hi": hi_, "days": int(m.sum()), "share": m.mean(), "right": right,
                       "avg_next_day_pct": r[m].mean() * 100})
     res["bands"] = pd.DataFrame(bands)
     # Per-year accuracy
