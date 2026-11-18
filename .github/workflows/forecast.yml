@@ -31,6 +31,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_TOPIC_MIKE: ${{ secrets.NTFY_TOPIC_MIKE }}
           APP_URL: ${{ vars.APP_URL }}
         run: python run_forecast.py
       - name: Save results

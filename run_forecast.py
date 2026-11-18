@@ -117,8 +117,9 @@ def update_track_record(history: list[dict], close: pd.Series) -> list[dict]:
 
 
 def notify(latest: dict):
-    topic = os.environ.get("NTFY_TOPIC")
-    if not topic:
+    # One private channel per person (NTFY_TOPIC for Jase, NTFY_TOPIC_MIKE for Mike)
+    topics = [t for t in (os.environ.get("NTFY_TOPIC"), os.environ.get("NTFY_TOPIC_MIKE")) if t]
+    if not topics:
         return
     call = latest["call"]
     title = {"LOCK IN": "Gold: lock in your price", "WAIT": "Gold: wait, tomorrow looks better"}.get(call, "Gold: no strong view tonight")
@@ -141,10 +142,11 @@ def notify(latest: dict):
     headers = {"Title": title, "Tags": tags, "Priority": "4" if latest["strength"] == "Strong" else "3"}
     if os.environ.get("APP_URL"):
         headers["Click"] = os.environ["APP_URL"]
-    try:
-        requests.post(f"https://ntfy.sh/{topic}", data=body.encode("utf-8"), headers=headers, timeout=20)
-    except requests.RequestException:
-        pass
+    for topic in topics:
+        try:
+            requests.post(f"https://ntfy.sh/{topic}", data=body.encode("utf-8"), headers=headers, timeout=20)
+        except requests.RequestException:
+            pass
 
 
 def main():
