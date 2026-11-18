@@ -1,5 +1,5 @@
 // App shell cached for offline; forecast data always fetched fresh when online.
-const CACHE = 'gold-forecast-v2';
+const CACHE = 'gold-forecast-v3';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', e => {

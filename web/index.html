@@ -86,8 +86,8 @@ function meter(label, p, right){
 }
 
 function blurb(L){
-  if(L.call==='LOCK IN') return 'The odds lean towards a lower price tomorrow. Fixing your price with your dealer now looks the better move.';
-  if(L.call==='WAIT') return 'The odds lean towards a higher price tomorrow. Waiting a day looks the better move.';
+  if(L.call==='LOCK IN'||L.call==='SELL TOMORROW') return 'The odds lean towards a lower price tomorrow. Fixing your price with your dealer now looks the better move.';
+  if(L.call==='WAIT'||L.call==='HOLD') return 'The odds lean towards a higher price tomorrow. Waiting a day looks the better move.';
   return 'No proven edge either way tonight. Stick to your batch plan below, or sell on your usual day.';
 }
 
@@ -100,7 +100,7 @@ function track(H){
   const name=c=>({'SELL TOMORROW':'lock in','HOLD':'wait','NO CLEAR CALL':'no view'}[c]||c.toLowerCase());
   return head+'<div class="track">'+recent.map(h=>{
     const mark=h.right===true?'<span class="ok">✓ Right</span>':h.right===false?'<span class="bad">✗ Wrong</span>':/NO /.test(h.call)?'<span class="pend">No call</span>':'<span class="pend">Waiting</span>';
-    return `<div class="row"><span>${h.date.slice(5)}</span><span>${esc(name(h.call))}</span><span>${gbp(h.close/31.1035,2)}/g</span>${mark}</div>`}).join('')+'</div>';
+    return `<div class="row"><span>${h.date.slice(5)}</span><span>${esc(name(h.call))}</span><span>${gbp(h.close/31.1035*MF,2)}/g</span>${mark}</div>`}).join('')+'</div>';
 }
 
 function money(L,H,B){
@@ -114,12 +114,14 @@ function money(L,H,B){
   return liveTxt+bt;
 }
 
+let MF=1; // market 24ct per gram -> Mastermelt 24ct per gram
 function batch(L,B){
   let st={};try{st=JSON.parse(localStorage.getItem('batch')||'{}')}catch(e){}
   const today=L.price_date, start=st.start||today, win=String(st.win||5);
   const S=(B&&B.strategy&&B.strategy[win])||null, rule=S?S.rule:(L.plan&&L.plan.rule)||{};
   const pts=L.spark.filter(p=>p[0]>=start);
-  const startP=pts.length?pts[0][1]:L.price.per_gram, now=L.price.per_gram;
+  const g=v=>(v>500?v/31.1035:v)*MF;
+  const startP=g(pts.length?pts[0][1]:L.price.per_gram), now=g(L.price.per_gram);
   const elapsed=Math.max(0,pts.length-1), left=Number(win)-elapsed;
   const a=L.atr_pct||0.01, k=rule&&rule.take_profit_ranges, s=rule&&rule.protect_ranges;
   const target=k?startP*(1+k*a):null, protect=s?startP*(1-s*a):null;
@@ -129,7 +131,7 @@ function batch(L,B){
   else if(protect&&now<=protect){act='Lock in today';why='Price has fallen to your protect level. Locking in stops it getting worse.'}
   else if(L.call==='LOCK IN'){act='Lock in tomorrow morning';why='Tonight\'s forecast leans lower.'}
   else {act='Wait';why=`Check again tomorrow evening. ${left} trading day${left===1?'':'s'} left.`}
-  const mm=L.mastermelt&&L.mastermelt.prices, f=mm?mm['9ct']/L.price.per_gram:null;
+  const mm=L.mastermelt&&L.mastermelt.prices, f=mm?mm['9ct']/mm['24ct']:null;
   const both=v=>`${gbp(v,2)}/g 24ct${f?` · ${gbp(v*f,2)}/g 9ct`:''}`;
   return `<div class="big" style="font-size:22px">${act}</div><p style="margin:4px 0 10px">${why}</p>
   <table>
@@ -139,7 +141,7 @@ function batch(L,B){
    ${target?`<tr><td>Lock-in target</td><td>${both(target)}</td></tr>`:''}
    ${protect?`<tr><td>Protect level</td><td>${both(protect)}</td></tr>`:''}
   </table>
-  <p class="small">Targets come from the rule that tested best for a ${win}-day deadline. Your batch settings stay on this phone.</p>`;
+  <p class="small">All prices are Mastermelt's, per gram. Targets come from the rule that tested best for a ${win}-day deadline. Your batch settings stay on this phone.</p>`;
 }
 
 async function load(){
@@ -151,14 +153,15 @@ async function load(){
     L.mastermelt={date:M.date,ok:M.ok,pct_of_spot:(M.pure_g/L.price.per_gram*100).toFixed(1),prices:M.prices,
       tomorrow:Object.fromEntries(Object.entries(M.prices).map(([k,v])=>[k,[v*lo,v*hi]]))};
   }
+  MF=L.mastermelt&&L.mastermelt.prices&&L.mastermelt.prices['24ct']?L.mastermelt.prices['24ct']/L.price.per_gram:1;
   const cls=L.call==='WAIT'||L.call==='HOLD'?'HOLD':L.call==='LOCK IN'||L.call==='SELL TOMORROW'?'SELL':'NONE';
   const mm=L.mastermelt&&L.mastermelt.prices;
   document.getElementById('date').textContent='Prices to '+new Date(L.price_date).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
-  document.getElementById('price').textContent=gbp(L.price.per_gram,2)+' /g';
-  document.getElementById('gram').textContent=mm?`24ct · Mastermelt 9ct ${gbp(mm['9ct'],2)} · 18ct ${gbp(mm['18ct'],2)}`:'24ct per gram';
+  document.getElementById('price').textContent=gbp(mm?mm['24ct']:L.price.per_gram,2)+' /g';
+  document.getElementById('gram').textContent=mm?`Mastermelt 24ct · 9ct ${gbp(mm['9ct'],2)} · 18ct ${gbp(mm['18ct'],2)} · market ${gbp(L.price.per_gram,2)}`:'Market 24ct per gram';
   const c=document.getElementById('chg');c.textContent=(L.price.change_pct>=0?'▲ ':'▼ ')+Math.abs(L.price.change_pct).toFixed(2)+'% today';c.className='chg '+(L.price.change_pct>=0?'up':'down');
   const lv=L.levels,n=L.news,R=L.ranges||{},RH=L.ranges_hit||{},F=L.plan&&L.plan.firm;
-  const pg=v=>gbp(v>500?v/31.1035:v,2);
+  const pg=v=>gbp((v>500?v/31.1035:v)*MF,2);
   app.innerHTML=`
   ${L.selftest?'<div class="warn">Test data only. Real forecasts start after the first live run.</div>':''}
   <div class="card verdict ${cls}"><div class="label">Tonight's call</div><div class="call">${esc(L.call)}</div>
@@ -168,23 +171,23 @@ async function load(){
     <tr><td class="small">Carat</td><td class="small">Today</td><td class="small">Likely tomorrow</td></tr>
     ${Object.entries(L.mastermelt.prices).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${gbp(v,2)}</td><td>${gbp(L.mastermelt.tomorrow[k][0],2)} to ${gbp(L.mastermelt.tomorrow[k][1],2)}</td></tr>`).join('')}</table>
     <p class="small">Per gram. Mastermelt's trade counter price from ${esc(L.mastermelt.date)}, about ${L.mastermelt.pct_of_spot}% of the live gold price.${L.mastermelt.ok?'':' Their page couldn\'t be read, so this is the last good price.'} The likely range catches the real price about 3 times in 4.</p></div>`:''}
-  <div class="card"><h2>Likely price range (24ct per gram)</h2><table>
-    ${R.h1?`<tr><td>Tomorrow</td><td>${gbp(R.h1.lo,2)} to ${gbp(R.h1.hi,2)}</td></tr>`:''}
-    ${R.h5?`<tr><td>Within a week</td><td>${gbp(R.h5.lo,2)} to ${gbp(R.h5.hi,2)}</td></tr>`:''}</table>
+  <div class="card"><h2>Likely Mastermelt 24ct price (per gram)</h2><table>
+    ${R.h1?`<tr><td>Tomorrow</td><td>${pg(R.h1.lo)} to ${pg(R.h1.hi)}</td></tr>`:''}
+    ${R.h5?`<tr><td>Within a week</td><td>${pg(R.h5.lo)} to ${pg(R.h5.hi)}</td></tr>`:''}</table>
     <p class="small">${RH.h1?`Tested since 2008: tomorrow's range caught the real price ${pc(RH.h1)} of the time, the week range ${pc(RH.h5)}.`:'Aimed to catch the real price 3 times in 4.'}</p></div>
   <div class="card"><h2>How sure</h2>${meter('Tomorrow',L.prob_up_tomorrow,L.backtest_right_tomorrow)}
     <p class="small" style="margin:0">${F?`Firm calls are the most confident 10% of nights. In testing, firm "wait" calls were right ${pc(F.firm_up_right)} of the time and firm "lock in" calls ${pc(F.firm_down_right)}. Gold rose on ${pc(F.all_days_up_rate)} of all days.`:'Gold rises on about 52% of days, so anything near the middle line is no real edge.'}</p></div>
   <div class="card"><h2>Money score</h2>${money(L,H,B)}</div>
   <div class="card"><h2>Why</h2><ul class="reasons">${L.reasons.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
     ${L.today.length?`<p class="small" style="margin-top:10px">${esc(L.today[0])}</p>`:''}</div>
-  <div class="card"><h2>Levels to watch (24ct per gram)</h2><table>
+  <div class="card"><h2>Levels to watch (Mastermelt 24ct per gram)</h2><table>
     <tr><td>20-day high</td><td>${pg(lv.high_20d)}</td></tr>
     <tr><td>20-day low</td><td>${pg(lv.low_20d)}</td></tr>
     <tr><td>50-day average</td><td>${pg(lv.sma50)}</td></tr>
     <tr><td>200-day average</td><td>${pg(lv.sma200)}</td></tr>
     <tr><td>1-year high</td><td>${pg(lv.high_52w)}</td></tr>
     <tr><td>RSI (14)</td><td>${L.rsi14}</td></tr></table></div>
-  <div class="card"><h2>Last 90 days (24ct per gram)</h2>${spark(L.spark.map(p=>[p[0],p[1]>500?p[1]/31.1035:p[1]]))}</div>
+  <div class="card"><h2>Last 90 days (Mastermelt 24ct per gram)</h2>${spark(L.spark.map(p=>[p[0],(p[1]>500?p[1]/31.1035:p[1])*MF]))}<p class="small">Earlier days use today's Mastermelt rate of ${(MF*100).toFixed(1)}% of the market price.</p></div>
   ${L.events&&L.events.length?`<div class="card"><h2>Big announcements due</h2><table>${L.events.map(e=>`<tr><td>${esc(e.country)} ${esc(e.title)}</td><td>${new Date(e.when_utc).toLocaleString('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit'})}</td></tr>`).join('')}</table><p class="small">These can swing the price sharply either way.</p></div>`:''}
   ${n?`<div class="card"><h2>Today's news <span class="tone ${esc(n.tone)}">${esc(n.tone)}</span></h2><p style="margin-top:0">${esc(n.summary)}</p>
     <div class="heads">${(n.headlines||[]).map(h=>`<a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a>`).join('')}</div>
