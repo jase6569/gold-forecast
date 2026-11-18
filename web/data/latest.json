@@ -1,41 +1,75 @@
 {
- "generated_utc": "2026-11-18T13:23+00:00",
+ "generated_utc": "2026-11-18T13:37+00:00",
  "price_date": "2026-11-18",
  "selftest": false,
- "call": "HOLD",
- "strength": "Strong",
- "prob_up_tomorrow": 0.5887,
- "prob_up_5d": 0.5858,
+ "call": "NO STRONG VIEW",
+ "strength": "",
+ "prob_up_tomorrow": 0.5846,
+ "prob_up_5d": 0.5836,
  "backtest_right_tomorrow": 0.5598526703499079,
  "backtest_right_5d": 0.5405304445274561,
  "price": {
-  "per_oz": 2864.91,
-  "per_gram": 92.11,
-  "change_pct": -2.28
+  "per_oz": 2868.02,
+  "per_gram": 92.21,
+  "change_pct": -2.17
  },
  "today": [
-  "Gold fell 2.4% in dollars and the pound weakened 0.1%, so in pounds gold fell 2.3%."
+  "Gold fell 2.3% in dollars and the pound weakened 0.1%, so in pounds gold fell 2.2%."
  ],
  "reasons": [
-  "Today's move -2.3%, pointing up",
-  "Gold in dollars, today -2.4%, pointing down",
-  "Close within day's range +0.24, pointing up",
+  "Today's move -2.2%, pointing up",
+  "Gold in dollars, today -2.3%, pointing down",
+  "Close within day's range +0.28, pointing up",
   "Big announcement due: GBP BOE Gov Bailey Speaks. Expect a bigger swing either way"
  ],
  "levels": {
-  "expected_low": 2788.08,
-  "expected_high": 2941.75,
-  "high_20d": 3111.96,
-  "low_20d": 2843.57,
-  "sma50": 3110.75,
-  "sma200": 3322.29,
-  "high_52w": 4053.3
+  "high_20d": 100.05,
+  "low_20d": 91.44,
+  "sma50": 100.01,
+  "sma200": 106.81,
+  "high_52w": 130.32
  },
- "rsi14": 34.2,
+ "ranges": {
+  "h1": {
+   "lo": 90.82,
+   "hi": 93.88
+  },
+  "h5": {
+   "lo": 89.49,
+   "hi": 96.27
+  }
+ },
+ "ranges_hit": {
+  "h1": 0.7522105263157894,
+  "h5": 0.7458912768647282
+ },
+ "atr_pct": 0.02679,
+ "plan": {
+  "window_days": 5,
+  "rule": {
+   "lock_if_up_chance_below": 0.48,
+   "take_profit_ranges": 1.5,
+   "protect_ranges": 3.0
+  },
+  "rule_per_10k": 24.635624788109656,
+  "wait_per_10k": 25.43562739029559,
+  "beats_sell_now": 0.5393858477970628,
+  "firm": {
+   "top_share": 0.1,
+   "firm_up_days": 203,
+   "firm_up_right": 0.5763546798029556,
+   "firm_down_days": 489,
+   "firm_down_right": 0.5316973415132924,
+   "all_days_up_rate": 0.5230153435623749,
+   "current_hi": 0.5976447221153444,
+   "current_lo": 0.48138523680924894
+  }
+ },
+ "rsi14": 34.4,
  "mastermelt": {
   "date": "2026-11-18",
   "ok": true,
-  "pct_of_spot": 96.9,
+  "pct_of_spot": 96.8,
   "prices": {
    "9ct": 33.47,
    "14ct": 52.21,
@@ -45,65 +79,65 @@
   },
   "tomorrow": {
    "9ct": [
-    32.57,
-    34.37
+    32.97,
+    34.07
    ],
    "14ct": [
-    50.81,
-    53.61
+    51.42,
+    53.15
    ],
    "18ct": [
-    65.14,
-    68.74
+    65.93,
+    68.15
    ],
    "22ct": [
-    79.56,
-    83.94
+    80.52,
+    83.23
    ],
    "24ct": [
-    86.86,
-    91.64
+    87.9,
+    90.86
    ]
   }
  },
  "news": {
   "tone": "negative",
-  "summary": "Gold has fallen sharply and is trading near one\u2011year lows. Headlines point to a stronger dollar and a broad sell\u2011off in metals and crypto as the main reasons.",
+  "summary": "Gold has fallen sharply, hitting a 13-month low after a broad sell-off. The decline coincides with a stronger US dollar and hawkish signals from the Federal Reserve.",
   "drivers": [
-   "Hawkish Fed / dollar rally",
-   "Broad metals sell\u2011off",
-   "Cryptocurrency rout"
+   "Stronger US dollar",
+   "Hawkish Fed / higher rate expectations",
+   "Broad metals and crypto sell-off"
   ],
   "headlines": [
    {
     "title": "Gold price today: Gold falls 2.02% on November 18, 2026",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2finvestment%2fgold-price-today-gold-falls-2-02-on-november-18-2026%2far-AA2hGEiK&c=4961398644371970150&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2finvestment%2fgold-price-today-gold-falls-2-02-on-november-18-2026%2far-AA2hGEiK&c=4961398644371970150&mkt=en-us"
    },
    {
     "title": "BTC Price Drops 15% as Gold and Silver Dump: Can December\u2019s Fed Decision Turn It?",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcrypto%2farticles%2fbtc-price-drops-15-gold-093459090.html&c=13387336568634802313&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcrypto%2farticles%2fbtc-price-drops-15-gold-093459090.html&c=13387336568634802313&mkt=en-us"
    },
    {
     "title": "Gold price today on November 17, 2026",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2fgeneral%2fgold-price-today-on-november-17-2026%2far-AA2hD5hK&c=4221719586567380983&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2fgeneral%2fgold-price-today-on-november-17-2026%2far-AA2hD5hK&c=4221719586567380983&mkt=en-us"
    },
    {
     "title": "Why gold and silver prices have fallen to their lowest in over a year",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.msn.com%2fen-sg%2fnews%2fother%2fwhy-gold-and-silver-prices-have-fallen-to-their-lowest-in-over-a-year%2far-AA2hCMAm&c=9421143410276981296&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2fwww.msn.com%2fen-sg%2fnews%2fother%2fwhy-gold-and-silver-prices-have-fallen-to-their-lowest-in-over-a-year%2far-AA2hCMAm&c=9421143410276981296&mkt=en-us"
+   },
+   {
+    "title": "Gold price crashes: Why are gold rate, silver down to over one year low?",
+    "source": "www.bing.com",
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2feconomictimes.indiatimes.com%2fworld%2fus%2fgold-price-crashes-why-are-gold-rate-silver-down-to-over-one-year-low%2farticleshow%2f135964411.cms&c=15997192379470766420&mkt=en-us"
    },
    {
     "title": "Gold drops 2% to over one-year low as hawkish Fed signals boost dollar",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.cnbc.com%2f2026%2f11%2f18%2fgold-slides-to-over-one-year-low-on-firm-dollar-us-rate-outlook.html&c=12813295345829316409&mkt=en-us"
-   },
-   {
-    "title": "Gold prices have fallen nearly 8% in a month. What will drive the next move?",
-    "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afda6da7568416f81d0e6efcf0003b6&url=https%3a%2f%2fwww.moneycontrol.com%2fnews%2fbusiness%2fpersonal-finance%2fgold-prices-have-fallen-nearly-8-in-a-month-what-will-drive-the-next-move-14083037.html&c=15348627185044795293&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2fwww.cnbc.com%2f2026%2f11%2f18%2fgold-slides-to-over-one-year-low-on-firm-dollar-us-rate-outlook.html&c=12813295345829316409&mkt=en-us"
    }
   ]
  },
@@ -123,363 +157,363 @@
  "spark": [
   [
    "2026-07-15",
-   2992.18
+   96.2
   ],
   [
    "2026-07-16",
-   2961.74
+   95.22
   ],
   [
    "2026-07-17",
-   2981.55
+   95.86
   ],
   [
    "2026-07-20",
-   2989.88
+   96.13
   ],
   [
    "2026-07-21",
-   3046.82
+   97.96
   ],
   [
    "2026-07-22",
-   3104.17
+   99.8
   ],
   [
    "2026-07-23",
-   3042.35
+   97.81
   ],
   [
    "2026-07-24",
-   3057.82
+   98.31
   ],
   [
    "2026-07-27",
-   3067.74
+   98.63
   ],
   [
    "2026-07-28",
-   3039.53
+   97.72
   ],
   [
    "2026-07-29",
-   3019.53
+   97.08
   ],
   [
    "2026-07-30",
-   3045.92
+   97.93
   ],
   [
    "2026-07-31",
-   3051.05
+   98.09
   ],
   [
    "2026-08-03",
-   3046.47
+   97.95
   ],
   [
    "2026-08-04",
-   3087.21
+   99.26
   ],
   [
    "2026-08-05",
-   3196.22
+   102.76
   ],
   [
    "2026-08-06",
-   3195.46
+   102.74
   ],
   [
    "2026-08-07",
-   3269.86
+   105.13
   ],
   [
    "2026-08-10",
-   3271.11
+   105.17
   ],
   [
    "2026-08-11",
-   3287.3
+   105.69
   ],
   [
    "2026-08-12",
-   3309.79
+   106.41
   ],
   [
    "2026-08-13",
-   3276.62
+   105.35
   ],
   [
    "2026-08-14",
-   3289.15
+   105.75
   ],
   [
    "2026-08-17",
-   3301.55
+   106.15
   ],
   [
    "2026-08-18",
-   3265.63
+   104.99
   ],
   [
    "2026-08-19",
-   3342.16
+   107.45
   ],
   [
    "2026-08-20",
-   3350.61
+   107.72
   ],
   [
    "2026-08-21",
-   3430.65
+   110.3
   ],
   [
    "2026-08-24",
-   3444.57
+   110.75
   ],
   [
    "2026-08-25",
-   3439.94
+   110.6
   ],
   [
    "2026-08-26",
-   3422.32
+   110.03
   ],
   [
    "2026-08-27",
-   3430.14
+   110.28
   ],
   [
    "2026-08-28",
-   3331.52
+   107.11
   ],
   [
    "2026-08-31",
-   3307.35
+   106.33
   ],
   [
    "2026-09-01",
-   3252.9
+   104.58
   ],
   [
    "2026-09-02",
-   3274.04
+   105.26
   ],
   [
    "2026-09-03",
-   3354.99
+   107.87
   ],
   [
    "2026-09-04",
-   3308.21
+   106.36
   ],
   [
    "2026-09-08",
-   3277.31
+   105.37
   ],
   [
    "2026-09-09",
-   3291.55
+   105.83
   ],
   [
    "2026-09-10",
-   3262.42
+   104.89
   ],
   [
    "2026-09-11",
-   3263.6
+   104.93
   ],
   [
    "2026-09-14",
-   3223.41
+   103.63
   ],
   [
    "2026-09-15",
-   3215.8
+   103.39
   ],
   [
    "2026-09-16",
-   3278.43
+   105.4
   ],
   [
    "2026-09-17",
-   3293.68
+   105.89
   ],
   [
    "2026-09-18",
-   3312.55
+   106.5
   ],
   [
    "2026-09-21",
-   3278.69
+   105.41
   ],
   [
    "2026-09-22",
-   3279.89
+   105.45
   ],
   [
    "2026-09-23",
-   3261.26
+   104.85
   ],
   [
    "2026-09-24",
-   3253.41
+   104.6
   ],
   [
    "2026-09-25",
-   3270.98
+   105.16
   ],
   [
    "2026-09-28",
-   3144.93
+   101.11
   ],
   [
    "2026-09-29",
-   3158.6
+   101.55
   ],
   [
    "2026-09-30",
-   3156.35
+   101.48
   ],
   [
    "2026-10-01",
-   3183.66
+   102.36
   ],
   [
    "2026-10-02",
-   3153.36
+   101.38
   ],
   [
    "2026-10-05",
-   3144.66
+   101.1
   ],
   [
    "2026-10-06",
-   3156.07
+   101.47
   ],
   [
    "2026-10-07",
-   3133.35
+   100.74
   ],
   [
    "2026-10-08",
-   3142.32
+   101.03
   ],
   [
    "2026-10-09",
-   3187.14
+   102.47
   ],
   [
    "2026-10-12",
-   3172.34
+   101.99
   ],
   [
    "2026-10-13",
-   3150.94
+   101.3
   ],
   [
    "2026-10-14",
-   3104.96
+   99.83
   ],
   [
    "2026-10-15",
-   3141.75
+   101.01
   ],
   [
    "2026-10-16",
-   3150.04
+   101.28
   ],
   [
    "2026-10-19",
-   3125.9
+   100.5
   ],
   [
    "2026-10-20",
-   3097.67
+   99.59
   ],
   [
    "2026-10-21",
-   3098.02
+   99.6
   ],
   [
    "2026-10-22",
-   3029.26
+   97.39
   ],
   [
    "2026-10-23",
-   2990.09
+   96.13
   ],
   [
    "2026-10-26",
-   3018.74
+   97.05
   ],
   [
    "2026-10-27",
-   3053.26
+   98.16
   ],
   [
    "2026-10-28",
-   3044.87
+   97.89
   ],
   [
    "2026-10-29",
-   3024.76
+   97.25
   ],
   [
    "2026-10-30",
-   2914.27
+   93.7
   ],
   [
    "2026-11-02",
-   2965.57
+   95.35
   ],
   [
    "2026-11-03",
-   2938.44
+   94.47
   ],
   [
    "2026-11-04",
-   3031.82
+   97.48
   ],
   [
    "2026-11-05",
-   3052.22
+   98.13
   ],
   [
    "2026-11-06",
-   3028.3
+   97.36
   ],
   [
    "2026-11-09",
-   3079.62
+   99.01
   ],
   [
    "2026-11-10",
-   2998.27
+   96.4
   ],
   [
    "2026-11-11",
-   2996.93
+   96.35
   ],
   [
    "2026-11-12",
-   2926.41
+   94.09
   ],
   [
    "2026-11-13",
-   2937.19
+   94.43
   ],
   [
    "2026-11-16",
-   2915.3
+   93.73
   ],
   [
    "2026-11-17",
-   2930.84
+   94.23
   ],
   [
    "2026-11-18",
-   2864.91
+   92.21
   ]
  ]
 }

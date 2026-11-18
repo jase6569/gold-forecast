@@ -1,10 +1,10 @@
 [
  {
   "date": "2026-11-18",
-  "call": "HOLD",
-  "strength": "Strong",
-  "close": 2864.91,
-  "p1": 0.5887,
-  "p5": 0.5858
+  "call": "NO STRONG VIEW",
+  "strength": "",
+  "close": 2868.02,
+  "p1": 0.5846,
+  "p5": 0.5836
  }
 ]
