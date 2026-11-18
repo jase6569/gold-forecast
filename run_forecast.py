@@ -19,7 +19,7 @@ import requests
 
 from engine import data as D
 from engine.backtest import _models, select_features
-from engine.context import big_events, gold_headlines, read_news
+from engine.context import STATUS as NEWS_STATUS, big_events, gold_headlines, read_news
 from engine.features import build_features, build_targets, feature_columns
 from run_stage1 import PLAIN_NAMES, synthetic_series
 
@@ -195,6 +195,7 @@ def main():
         },
         "rsi14": round(float(last["rsi14"]), 1),
         "news": news,
+        "news_status": NEWS_STATUS,
         "events": events,
         "spark": [[d.date().isoformat(), round(float(v), 2)] for d, v in g["close"].iloc[-90:].items()],
     }
