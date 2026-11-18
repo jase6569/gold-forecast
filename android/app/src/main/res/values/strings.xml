@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gold Forecast</string>
+    <string name="widget_name">Gold Forecast</string>
+    <string name="widget_desc">Tonight's lock in or wait call with Mastermelt prices</string>
+</resources>

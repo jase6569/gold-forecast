@@ -20,6 +20,7 @@ import requests
 from engine import data as D
 from engine import mastermelt as MM
 from engine import ranges as RG
+from engine import widget as WG
 from engine.backtest import _models, select_features
 from engine.context import STATUS as NEWS_STATUS, big_events, gold_headlines, read_news
 from engine.features import build_features, build_targets, feature_columns
@@ -256,6 +257,8 @@ def main():
         hist_path.write_text(json.dumps(history[-400:], indent=1))
     (OUT / "latest.json").write_text(json.dumps(latest, indent=1))
 
+    if not args.selftest:
+        WG.main()
     if not args.selftest and not args.no_notify:
         notify(latest)
     print(json.dumps({k: latest[k] for k in ["price_date", "call", "strength", "prob_up_tomorrow", "prob_up_5d", "reasons"]}, indent=1))

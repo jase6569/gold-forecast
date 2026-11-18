@@ -194,6 +194,10 @@ async function load(){
     <p class="small">News is shown for context. It isn't part of the tested model.</p></div>`:''}
   <div class="card"><h2>Track record</h2>${track(H)}</div>
   ${B?`<div class="card"><h2>Backtest</h2><p style="margin:0 0 6px">Tested on daily gold in pounds, ${esc(B.from.slice(0,4))} to ${esc(B.to.slice(0,4))}, never on years it was trained on.</p><a href="report.html">Full backtest report</a></div>`:''}
+  <div class="card"><h2>Home-screen widget (Android)</h2>
+    <p style="margin-top:0">Shows tonight's call, Mastermelt's prices and tomorrow's likely 9ct range on your home screen.</p>
+    <a href="gold-forecast-widget.apk" download style="display:inline-block;background:#1c1a17;color:#f3ead6;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:600">Download the widget app</a>
+    <p class="small">Open the download and tap Install. If Android asks, allow installs from Chrome. Then press and hold an empty space on your home screen, tap Widgets, find Gold Forecast and drag it on. It updates itself every 30 minutes; tap ↻ to refresh.</p></div>
   <p class="small" style="text-align:center">Updated ${new Date(L.generated_utc).toLocaleString('en-GB')}</p>`;
   const save=()=>{try{localStorage.setItem('batch',JSON.stringify({start:document.getElementById('bStart').value,win:document.getElementById('bWin').value}))}catch(e){};document.getElementById('batch').innerHTML=batch(L,B);wire()};
   const wire=()=>{['bStart','bWin'].forEach(id=>{const el=document.getElementById(id);if(el)el.onchange=save})};

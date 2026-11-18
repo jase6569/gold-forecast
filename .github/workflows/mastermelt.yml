@@ -21,11 +21,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python engine/mastermelt.py
+      - run: python engine/mastermelt.py && python engine/widget.py
       - name: Save price
         run: |
           git config user.name "gold-forecast-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add web/data/mastermelt.json
+          git add web/data/mastermelt.json web/data/widget.json
           git diff --cached --quiet || git commit -m "Mastermelt $(date -u +%F)"
           git pull --rebase && git push
