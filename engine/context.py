@@ -51,7 +51,7 @@ def read_news(headlines: list[dict], price_note: str) -> dict | None:
     if not key or not headlines:
         STATUS.append(f"News read skipped (key set: {bool(key)}, headlines: {len(headlines)})")
         return None
-    model = os.environ.get("OPENAI_MODEL", "gpt-5-mini")
+    model = os.environ.get("OPENAI_MODEL") or "gpt-5-mini"
     lines = "\n".join(f"- {h['title']} ({h['source']})" for h in headlines)
     prompt = (
         "You help a UK gold dealer decide whether to sell scrap gold tomorrow or hold it. "
