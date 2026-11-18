@@ -62,15 +62,17 @@ def describe(feature: str, value: float) -> str:
 
 
 def verdict(p1: float, p5: float) -> tuple[str, str]:
-    if p5 >= 0.56 or (p1 >= 0.52 and p5 >= 0.52):
-        call = "HOLD"
-    elif p1 <= 0.48 and p5 <= 0.50:
-        call = "SELL TOMORROW"
-    else:
-        call = "NO CLEAR CALL"
-    strength = "Strong" if (p1 <= 0.45 or p1 >= 0.55 or p5 >= 0.60 or p5 <= 0.40) and call != "NO CLEAR CALL" else (
-        "Lean" if call != "NO CLEAR CALL" else "")
-    return call, strength
+    """Thresholds set from the real backtest (2004 to 2026). Only the next-day
+    model showed an edge; the 5-day model didn't, so it's shown but not used.
+    p1 >= 0.55 was right 56% of the time (base rate 52%); p1 <= 0.48 caught
+    softer next days (average -0.08% to -0.11%). In between, no proven edge."""
+    if p1 >= 0.55:
+        return "HOLD", "Strong"
+    if p1 <= 0.45:
+        return "SELL TOMORROW", "Strong"
+    if p1 <= 0.48:
+        return "SELL TOMORROW", "Lean"
+    return "NO CLEAR CALL", ""
 
 
 def band_hit_rate(bt: dict | None, p: float, key: str) -> float | None:
@@ -96,9 +98,9 @@ def update_track_record(history: list[dict], close: pd.Series) -> list[dict]:
             h["next_close"] = round(float(close.iloc[i + 1]), 2)
             h["right"] = bool(close.iloc[i + 1] < c0)
             h["scored"] = True
-        elif h["call"] == "HOLD" and i + 5 < len(idx):
-            h["close_5d"] = round(float(close.iloc[i + 5]), 2)
-            h["right"] = bool(close.iloc[i + 5] > c0)
+        elif h["call"] == "HOLD" and i + 1 < len(idx):
+            h["next_close"] = round(float(close.iloc[i + 1]), 2)
+            h["right"] = bool(close.iloc[i + 1] > c0)
             h["scored"] = True
         elif h["call"] == "NO CLEAR CALL" and i + 1 < len(idx):
             h["next_close"] = round(float(close.iloc[i + 1]), 2)
@@ -154,7 +156,7 @@ def main():
                     f"{'rose' if last['ret_1'] >= 0 else 'fell'} {abs(last['ret_1'] * 100):.1f}%.")
 
     reasons = []
-    for feat, c in (contrib5 if call == "HOLD" else contrib1)[:3]:
+    for feat, c in contrib1[:3]:
         reasons.append(f"{describe(feat, float(last[feat]))}, pointing {'up' if c > 0 else 'down'}")
 
     if not reasons:
