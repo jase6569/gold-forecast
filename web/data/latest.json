@@ -1,41 +1,40 @@
 {
- "generated_utc": "2026-11-18T13:11+00:00",
+ "generated_utc": "2026-11-18T13:12+00:00",
  "price_date": "2026-11-18",
  "selftest": false,
  "call": "HOLD",
  "strength": "Strong",
- "prob_up_tomorrow": 0.6138,
- "prob_up_5d": 0.6012,
+ "prob_up_tomorrow": 0.6083,
+ "prob_up_5d": 0.5976,
  "backtest_right_tomorrow": 0.5598526703499079,
  "backtest_right_5d": 0.5405304445274561,
  "price": {
-  "per_oz": 2846.39,
-  "per_gram": 91.51,
-  "change_pct": -2.92
+  "per_oz": 2850.26,
+  "per_gram": 91.64,
+  "change_pct": -2.79
  },
  "today": [
-  "Gold fell 3.0% in dollars and the pound weakened 0.1%, so in pounds gold fell 2.9%."
+  "Gold fell 2.9% in dollars and the pound weakened 0.1%, so in pounds gold fell 2.8%."
  ],
  "reasons": [
-  "Today's move -2.9%, pointing up",
-  "Close within day's range +0.03, pointing up",
-  "Gold in dollars, today -3.0%, pointing down",
+  "Today's move -2.8%, pointing up",
+  "Close within day's range +0.08, pointing up",
+  "Gold in dollars, today -2.9%, pointing down",
   "Big announcement due: GBP BOE Gov Bailey Speaks. Expect a bigger swing either way"
  ],
  "levels": {
-  "expected_low": 2769.54,
-  "expected_high": 2923.23,
+  "expected_low": 2773.39,
+  "expected_high": 2927.14,
   "high_20d": 3111.96,
-  "low_20d": 2843.42,
-  "sma50": 3110.37,
-  "sma200": 3322.19,
+  "low_20d": 2842.98,
+  "sma50": 3110.45,
+  "sma200": 3322.21,
   "high_52w": 4053.3
  },
- "rsi14": 33.0,
+ "rsi14": 33.2,
  "news": null,
  "news_status": [
-  "News feed unavailable: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=gold+price+OR+gold+prices+OR+bullion+when%3A1d&hl=en-GB&gl=GB&ceid=GB%3Aen",
-  "News read skipped (key set: True, headlines: 0)"
+  "OpenAI news read failed: 400 Client Error: Bad Request for url: https://api.openai.com/v1/chat/completions {\n    \"error\": {\n        \"message\": \"you must provide a model parameter\",\n        \"type\": \"invalid_request_error\",\n        \"param\": null,\n        \"code\": null\n    }\n}\n"
  ],
  "events": [
   {
@@ -408,7 +407,7 @@
   ],
   [
    "2026-11-18",
-   2846.39
+   2850.26
   ]
  ]
 }
