@@ -1,0 +1,118 @@
+{
+ "generated": "2026-11-18",
+ "from": "2004-09-21",
+ "to": "2026-11-18",
+ "h1": {
+  "accuracy": 0.5314654213920391,
+  "always_up": 0.5230153435623749,
+  "auc": 0.5358276643990929,
+  "days": 4497,
+  "bands": [
+   {
+    "band": "Strong down",
+    "lo": 0.0,
+    "hi": 0.45,
+    "days": 106,
+    "share": 0.023571269735379142,
+    "right": 0.5377358490566038,
+    "avg_next_day_pct": -0.07729537549687761
+   },
+   {
+    "band": "Lean down",
+    "lo": 0.45,
+    "hi": 0.48,
+    "days": 320,
+    "share": 0.07115855014454081,
+    "right": 0.525,
+    "avg_next_day_pct": -0.10602493717139065
+   },
+   {
+    "band": "No clear call",
+    "lo": 0.48,
+    "hi": 0.52,
+    "days": 1373,
+    "share": 0.3053146542139204,
+    "right": null,
+    "avg_next_day_pct": -0.03437342464361199
+   },
+   {
+    "band": "Lean up",
+    "lo": 0.52,
+    "hi": 0.55,
+    "days": 1069,
+    "share": 0.23771403157660662,
+    "right": 0.5210477081384471,
+    "avg_next_day_pct": 0.04377349528892379
+   },
+   {
+    "band": "Strong up",
+    "lo": 0.55,
+    "hi": 1.01,
+    "days": 1629,
+    "share": 0.36224149432955305,
+    "right": 0.5598526703499079,
+    "avg_next_day_pct": 0.12118736549138949
+   }
+  ]
+ },
+ "h5": {
+  "accuracy": 0.536167371466726,
+  "always_up": 0.5383930558646783,
+  "auc": 0.49446701877573995,
+  "days": 4493,
+  "bands": [
+   {
+    "band": "Strong down",
+    "lo": 0.0,
+    "hi": 0.45,
+    "days": 34,
+    "share": 0.007567326953038059,
+    "right": 0.47058823529411764,
+    "avg_next_day_pct": 0.15789371229162447
+   },
+   {
+    "band": "Lean down",
+    "lo": 0.45,
+    "hi": 0.48,
+    "days": 102,
+    "share": 0.02270198085911418,
+    "right": 0.4215686274509804,
+    "avg_next_day_pct": 0.1250518670083494
+   },
+   {
+    "band": "No clear call",
+    "lo": 0.48,
+    "hi": 0.52,
+    "days": 546,
+    "share": 0.12152236812819942,
+    "right": null,
+    "avg_next_day_pct": 0.08434419826178959
+   },
+   {
+    "band": "Lean up",
+    "lo": 0.52,
+    "hi": 0.55,
+    "days": 1134,
+    "share": 0.2523926107277988,
+    "right": 0.5388007054673721,
+    "avg_next_day_pct": 0.21318566388671495
+   },
+   {
+    "band": "Strong up",
+    "lo": 0.55,
+    "hi": 1.01,
+    "days": 2677,
+    "share": 0.5958157133318496,
+    "right": 0.5405304445274561,
+    "avg_next_day_pct": 0.18800538163480668
+   }
+  ]
+ },
+ "rules_passing": [
+  "RSI(2) under 10 bounces, over 90 pulls back",
+  "Below lower Bollinger band bounces, above upper pulls back",
+  "Stochastic under 20 bounces, over 80 pulls back",
+  "A down day is followed by an up day (and vice versa)",
+  "Down day while above the 200-day average: buy the dip"
+ ]
+}
