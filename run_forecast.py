@@ -18,6 +18,7 @@ import pandas as pd
 import requests
 
 from engine import data as D
+from engine import mastermelt as MM
 from engine.backtest import _models, select_features
 from engine.context import STATUS as NEWS_STATUS, big_events, gold_headlines, read_news
 from engine.features import build_features, build_targets, feature_columns
@@ -114,8 +115,13 @@ def notify(latest: dict):
         return
     call = latest["call"]
     title = f"Gold: {latest['strength'] + ' ' if latest['strength'] else ''}{call.title()}"
-    body = (f"£{latest['price']['per_oz']:,.0f}/oz · £{latest['price']['per_gram']:.2f}/g. "
-            + (latest["reasons"][0] if latest["reasons"] else ""))
+    mm = latest.get("mastermelt")
+    if mm and mm.get("prices"):
+        p = mm["prices"]
+        price_line = f"Mastermelt 9ct £{p.get('9ct', 0):.2f}/g, 18ct £{p.get('18ct', 0):.2f}/g. "
+    else:
+        price_line = f"£{latest['price']['per_oz']:,.0f}/oz · £{latest['price']['per_gram']:.2f}/g. "
+    body = price_line + (latest["reasons"][0] if latest["reasons"] else "")
     tags = {"HOLD": "chart_with_upwards_trend", "SELL TOMORROW": "moneybag"}.get(call, "zzz")
     headers = {"Title": title, "Tags": tags, "Priority": "4" if latest["strength"] == "Strong" else "3"}
     if os.environ.get("APP_URL"):
@@ -159,6 +165,22 @@ def main():
     for feat, c in contrib1[:3]:
         reasons.append(f"{describe(feat, float(last[feat]))}, pointing {'up' if c > 0 else 'down'}")
 
+    # Mastermelt: their trade counter price per gram, and what tomorrow's likely
+    # range would mean for it (their price follows spot, set once a day)
+    mm = None
+    if not args.selftest:
+        MM.main()
+    mm_path = OUT / "mastermelt.json"
+    if mm_path.exists():
+        raw = json.loads(mm_path.read_text())
+        spot_g = close / GRAMS_PER_OZ
+        if raw.get("prices"):
+            lo_f, hi_f = (close - atr) / close, (close + atr) / close
+            mm = {"date": raw["date"], "ok": raw.get("ok", False),
+                  "pct_of_spot": round(raw["pure_g"] / spot_g * 100, 1),
+                  "prices": raw["prices"],
+                  "tomorrow": {k: [round(v * lo_f, 2), round(v * hi_f, 2)] for k, v in raw["prices"].items()}}
+
     if not reasons:
         reasons.append("None of the tested indicators is giving a proven edge today, so there's nothing to act on")
 
@@ -194,6 +216,7 @@ def main():
             "high_52w": round(float(hi.iloc[-252:].max()), 2),
         },
         "rsi14": round(float(last["rsi14"]), 1),
+        "mastermelt": mm,
         "news": news,
         "news_status": NEWS_STATUS,
         "events": events,

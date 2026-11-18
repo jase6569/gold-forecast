@@ -40,7 +40,7 @@ h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);
 .small{font-size:12.5px;color:var(--muted)}
 ul.reasons{margin:0;padding-left:18px}ul.reasons li{margin:4px 0}
 table{width:100%;border-collapse:collapse;font-size:14px}
-td{padding:7px 0;border-bottom:1px solid var(--line)}td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+td{padding:7px 0;border-bottom:1px solid var(--line)}td+td{text-align:right;font-variant-numeric:tabular-nums}
 tr:last-child td{border-bottom:0}
 .tone{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12px;font-weight:600;background:var(--none-soft)}
 .tone.supportive{background:var(--hold-soft);color:var(--hold)}.tone.negative{background:var(--sell-soft);color:var(--sell)}
@@ -102,7 +102,13 @@ function track(H){
 }
 
 async function load(){
-  const [L,H,B]=await Promise.all([get('data/latest.json'),get('data/history.json'),get('data/backtest.json')]);
+  const [L,H,B,M]=await Promise.all([get('data/latest.json'),get('data/history.json'),get('data/backtest.json'),get('data/mastermelt.json')]);
+  // Morning refresh: use Mastermelt's newer counter price if it has come in since the evening run
+  if(L&&M&&M.prices&&(!L.mastermelt||M.date>L.mastermelt.date)){
+    const lo=L.levels.expected_low/L.price.per_oz,hi=L.levels.expected_high/L.price.per_oz;
+    L.mastermelt={date:M.date,ok:M.ok,pct_of_spot:(M.pure_g/L.price.per_gram*100).toFixed(1),prices:M.prices,
+      tomorrow:Object.fromEntries(Object.entries(M.prices).map(([k,v])=>[k,[v*lo,v*hi]]))};
+  }
   const app=document.getElementById('app');
   if(!L){app.innerHTML='<div class="card">No forecast yet. The first one arrives after tonight\'s run.</div>';return}
   const cls=L.call==='HOLD'?'HOLD':L.call==='SELL TOMORROW'?'SELL':'NONE';
@@ -118,6 +124,10 @@ async function load(){
   <div class="card"><h2>How sure</h2>${meter('Tomorrow',L.prob_up_tomorrow,L.backtest_right_tomorrow)}<p class="small" style="margin:0">Gold rises on about 52% of days, so anything near the middle line is no real edge.</p></div>
   <div class="card"><h2>Why</h2><ul class="reasons">${L.reasons.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
     ${L.today.length?`<p class="small" style="margin-top:10px">${esc(L.today[0])}</p>`:''}</div>
+  ${L.mastermelt?`<div class="card"><h2>Mastermelt prices</h2><table>
+    <tr><td class="small">Carat</td><td class="small" style="text-align:right">Counter price today</td><td class="small" style="text-align:right">Likely tomorrow</td></tr>
+    ${Object.entries(L.mastermelt.prices).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${gbp(v,2)}/g</td><td>${gbp(L.mastermelt.tomorrow[k][0],2)} to ${gbp(L.mastermelt.tomorrow[k][1],2)}</td></tr>`).join('')}</table>
+    <p class="small">Mastermelt's trade counter price from ${esc(L.mastermelt.date)}, about ${L.mastermelt.pct_of_spot}% of the live gold price.${L.mastermelt.ok?'':' Their page couldn\'t be read tonight, so this is the last good price.'} Tomorrow's range follows the gold price; Mastermelt sets its new price each morning.</p></div>`:''}
   <div class="card"><h2>Levels to watch</h2><table>
     <tr><td>Likely range tomorrow</td><td>${gbp(lv.expected_low)} to ${gbp(lv.expected_high)}</td></tr>
     <tr><td>20-day high</td><td>${gbp(lv.high_20d)}</td></tr>

@@ -34,7 +34,7 @@ A second check plants a small real pattern in random data, and the engine finds 
 
 GitHub Actions does everything on GitHub's servers:
 
-`forecast.yml` runs at 22:15 UTC, Monday to Friday. It pulls prices, works out tomorrow's verdict, has OpenAI read the day's gold news, checks the calendar for big US and UK announcements, scores past calls, saves to `web/data`, and sends a phone notification through ntfy. `backtest.yml` runs every Sunday. It runs the self-test, then re-runs the full backtest so the model's track record stays current.
+`forecast.yml` runs at 22:15 UTC, Monday to Friday. It pulls prices, works out tomorrow's verdict, has OpenAI read the day's gold news, checks the calendar for big US and UK announcements, scores past calls, saves to `web/data`, and sends a phone notification through ntfy. `mastermelt.yml` runs each morning at 9:20 UTC, Monday to Saturday. It reads Mastermelt's trade counter prices per carat, using the same reader as Gold Trader, so the app always shows what Mastermelt actually pays. `backtest.yml` runs every Sunday. It runs the self-test, then re-runs the full backtest so the model's track record stays current.
 
 The phone app is the static site in `web/`, hosted on Vercel. It redeploys automatically each time the bot saves a new forecast. To install it, open it in Chrome on Android, then tap the menu and choose "Add to Home screen".
 
