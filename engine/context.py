@@ -13,24 +13,36 @@ UA = {"User-Agent": "Mozilla/5.0 (gold-forecast)"}
 STATUS: list[str] = []  # why news was skipped, shown in latest.json
 
 
+FEEDS = [
+    ("https://www.bing.com/news/search", {"q": "gold price", "format": "rss", "qft": "interval=\"7\""}),
+    ("https://feeds.finance.yahoo.com/rss/2.0/headline", {"s": "GC=F", "region": "US", "lang": "en-US"}),
+    ("https://news.google.com/rss/search", {"q": "gold price when:1d", "hl": "en-GB", "gl": "GB", "ceid": "GB:en"}),
+]
+
+
 def gold_headlines(limit: int = 20) -> list[dict]:
-    url = "https://news.google.com/rss/search"
-    params = {"q": "gold price OR gold prices OR bullion when:1d", "hl": "en-GB", "gl": "GB", "ceid": "GB:en"}
-    try:
-        r = requests.get(url, params=params, headers=UA, timeout=20)
-        r.raise_for_status()
-        root = ET.fromstring(r.content)
-    except (requests.RequestException, ET.ParseError) as e:
-        STATUS.append(f"News feed unavailable: {e}")
-        return []
-    out = []
-    for item in root.iter("item"):
-        title = (item.findtext("title") or "").strip()
-        src = item.find("source")
-        out.append({"title": title, "source": src.text if src is not None else "", "link": item.findtext("link") or ""})
-        if len(out) >= limit:
-            break
-    return out
+    """Try several free news feeds in turn; some rate-limit cloud servers."""
+    for url, params in FEEDS:
+        try:
+            r = requests.get(url, params=params, headers=UA, timeout=20)
+            r.raise_for_status()
+            root = ET.fromstring(r.content)
+        except (requests.RequestException, ET.ParseError) as e:
+            STATUS.append(f"News feed unavailable: {str(e)[:120]}")
+            continue
+        out = []
+        for item in root.iter("item"):
+            title = (item.findtext("title") or "").strip()
+            if not title:
+                continue
+            src = item.find("source")
+            out.append({"title": title, "source": src.text if src is not None else url.split("/")[2],
+                        "link": item.findtext("link") or ""})
+            if len(out) >= limit:
+                break
+        if out:
+            return out
+    return []
 
 
 def read_news(headlines: list[dict], price_note: str) -> dict | None:
