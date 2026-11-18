@@ -1,38 +1,42 @@
 {
- "generated_utc": "2026-11-18T13:09+00:00",
+ "generated_utc": "2026-11-18T13:11+00:00",
  "price_date": "2026-11-18",
  "selftest": false,
  "call": "HOLD",
  "strength": "Strong",
- "prob_up_tomorrow": 0.6155,
- "prob_up_5d": 0.6021,
+ "prob_up_tomorrow": 0.6138,
+ "prob_up_5d": 0.6012,
  "backtest_right_tomorrow": 0.5598526703499079,
  "backtest_right_5d": 0.5405304445274561,
  "price": {
-  "per_oz": 2844.99,
-  "per_gram": 91.47,
-  "change_pct": -2.97
+  "per_oz": 2846.39,
+  "per_gram": 91.51,
+  "change_pct": -2.92
  },
  "today": [
-  "Gold fell 3.1% in dollars and the pound weakened 0.1%, so in pounds gold fell 3.0%."
+  "Gold fell 3.0% in dollars and the pound weakened 0.1%, so in pounds gold fell 2.9%."
  ],
  "reasons": [
-  "Today's move -3.0%, pointing up",
-  "Close within day's range +0.02, pointing up",
-  "Gold in dollars, today -3.1%, pointing down",
+  "Today's move -2.9%, pointing up",
+  "Close within day's range +0.03, pointing up",
+  "Gold in dollars, today -3.0%, pointing down",
   "Big announcement due: GBP BOE Gov Bailey Speaks. Expect a bigger swing either way"
  ],
  "levels": {
-  "expected_low": 2768.12,
-  "expected_high": 2921.85,
+  "expected_low": 2769.54,
+  "expected_high": 2923.23,
   "high_20d": 3111.96,
-  "low_20d": 2843.09,
-  "sma50": 3110.35,
+  "low_20d": 2843.42,
+  "sma50": 3110.37,
   "sma200": 3322.19,
   "high_52w": 4053.3
  },
- "rsi14": 32.9,
+ "rsi14": 33.0,
  "news": null,
+ "news_status": [
+  "News feed unavailable: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=gold+price+OR+gold+prices+OR+bullion+when%3A1d&hl=en-GB&gl=GB&ceid=GB%3Aen",
+  "News read skipped (key set: True, headlines: 0)"
+ ],
  "events": [
   {
    "when_utc": "2026-11-18T15:00:00+00:00",
@@ -404,7 +408,7 @@
   ],
   [
    "2026-11-18",
-   2844.99
+   2846.39
   ]
  ]
 }
