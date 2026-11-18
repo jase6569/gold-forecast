@@ -19,6 +19,7 @@ import requests
 
 from engine import data as D
 from engine import mastermelt as MM
+from engine import ranges as RG
 from engine.backtest import _models, select_features
 from engine.context import STATUS as NEWS_STATUS, big_events, gold_headlines, read_news
 from engine.features import build_features, build_targets, feature_columns
@@ -62,18 +63,21 @@ def describe(feature: str, value: float) -> str:
     return f"{name} {value:+.2f}"
 
 
-def verdict(p1: float, p5: float) -> tuple[str, str]:
-    """Thresholds set from the real backtest (2004 to 2026). Only the next-day
-    model showed an edge; the 5-day model didn't, so it's shown but not used.
-    p1 >= 0.55 was right 56% of the time (base rate 52%); p1 <= 0.48 caught
-    softer next days (average -0.08% to -0.11%). In between, no proven edge."""
-    if p1 >= 0.55:
-        return "HOLD", "Strong"
-    if p1 <= 0.45:
-        return "SELL TOMORROW", "Strong"
-    if p1 <= 0.48:
-        return "SELL TOMORROW", "Lean"
-    return "NO CLEAR CALL", ""
+def verdict(p1: float, bt: dict | None, window: str = "5") -> tuple[str, str]:
+    """LOCK IN = fix the price with your dealer now. WAIT = tomorrow looks better.
+    Firm calls are the 10% most confident nights in the backtest; the lean lock-in
+    threshold is the one the sell-window test picked on years it then proved on."""
+    firm = (bt or {}).get("firm") or {}
+    rule = (((bt or {}).get("strategy") or {}).get(window) or {}).get("rule") or {}
+    hi, lo = firm.get("current_hi", 0.56), firm.get("current_lo", 0.46)
+    if p1 <= lo:
+        return "LOCK IN", "Strong"
+    if p1 >= hi:
+        return "WAIT", "Strong"
+    t = rule.get("lock_if_up_chance_below")
+    if t is not None and p1 < t:
+        return "LOCK IN", "Lean"
+    return "NO STRONG VIEW", ""
 
 
 def band_hit_rate(bt: dict | None, p: float, key: str) -> float | None:
@@ -95,15 +99,17 @@ def update_track_record(history: list[dict], close: pd.Series) -> list[dict]:
             continue
         i = idx.get_loc(d)
         c0 = close.iloc[i]
-        if h["call"] == "SELL TOMORROW" and i + 1 < len(idx):
+        if i + 1 < len(idx):
+            h["next_ret"] = round(float(np.log(close.iloc[i + 1] / c0)), 6)
+        if h["call"] in ("SELL TOMORROW", "LOCK IN") and i + 1 < len(idx):
             h["next_close"] = round(float(close.iloc[i + 1]), 2)
             h["right"] = bool(close.iloc[i + 1] < c0)
             h["scored"] = True
-        elif h["call"] == "HOLD" and i + 1 < len(idx):
+        elif h["call"] in ("HOLD", "WAIT") and i + 1 < len(idx):
             h["next_close"] = round(float(close.iloc[i + 1]), 2)
             h["right"] = bool(close.iloc[i + 1] > c0)
             h["scored"] = True
-        elif h["call"] == "NO CLEAR CALL" and i + 1 < len(idx):
+        elif h["call"] in ("NO CLEAR CALL", "NO STRONG VIEW") and i + 1 < len(idx):
             h["next_close"] = round(float(close.iloc[i + 1]), 2)
             h["scored"] = True
     return history
@@ -114,15 +120,17 @@ def notify(latest: dict):
     if not topic:
         return
     call = latest["call"]
-    title = f"Gold: {latest['strength'] + ' ' if latest['strength'] else ''}{call.title()}"
+    title = {"LOCK IN": "Gold: lock in your price", "WAIT": "Gold: wait, tomorrow looks better"}.get(call, "Gold: no strong view tonight")
+    if latest["strength"] == "Strong" and call != "NO STRONG VIEW":
+        title += " (firm call)"
     mm = latest.get("mastermelt")
     if mm and mm.get("prices"):
         p = mm["prices"]
         price_line = f"Mastermelt 9ct £{p.get('9ct', 0):.2f}/g, 18ct £{p.get('18ct', 0):.2f}/g. "
     else:
-        price_line = f"£{latest['price']['per_oz']:,.0f}/oz · £{latest['price']['per_gram']:.2f}/g. "
+        price_line = f"24ct £{latest['price']['per_gram']:.2f}/g. "
     body = price_line + (latest["reasons"][0] if latest["reasons"] else "")
-    tags = {"HOLD": "chart_with_upwards_trend", "SELL TOMORROW": "moneybag"}.get(call, "zzz")
+    tags = {"WAIT": "chart_with_upwards_trend", "LOCK IN": "lock"}.get(call, "zzz")
     headers = {"Title": title, "Tags": tags, "Priority": "4" if latest["strength"] == "Strong" else "3"}
     if os.environ.get("APP_URL"):
         headers["Click"] = os.environ["APP_URL"]
@@ -145,7 +153,9 @@ def main():
 
     p1, contrib1, _ = fit_and_predict(f, cols, t, 1)
     p5, contrib5, _ = fit_and_predict(f, cols, t, 5)
-    call, strength = verdict(p1, p5)
+    bt_path = OUT / "backtest.json"
+    bt = json.loads(bt_path.read_text()) if bt_path.exists() else None
+    call, strength = verdict(p1, bt)
 
     last = f.iloc[-1]
     close = float(last["close"])
@@ -165,6 +175,15 @@ def main():
     for feat, c in contrib1[:3]:
         reasons.append(f"{describe(feat, float(last[feat]))}, pointing {'up' if c > 0 else 'down'}")
 
+    rng = RG.latest(g["close"])
+    gram = lambda v: round(float(v) / GRAMS_PER_OZ, 2)
+    strat5 = ((bt or {}).get("strategy") or {}).get("5") or {}
+    plan = {"window_days": 5, "rule": strat5.get("rule"),
+            "rule_per_10k": (strat5.get("rule_unseen") or {}).get("per_10k"),
+            "wait_per_10k": (strat5.get("sell_at_end_unseen") or {}).get("per_10k"),
+            "beats_sell_now": (strat5.get("rule_unseen") or {}).get("beats_sell_now"),
+            "firm": (bt or {}).get("firm")}
+
     # Mastermelt: their trade counter price per gram, and what tomorrow's likely
     # range would mean for it (their price follows spot, set once a day)
     mm = None
@@ -175,7 +194,7 @@ def main():
         raw = json.loads(mm_path.read_text())
         spot_g = close / GRAMS_PER_OZ
         if raw.get("prices"):
-            lo_f, hi_f = (close - atr) / close, (close + atr) / close
+            lo_f, hi_f = rng["h1"]["lo"] / close, rng["h1"]["hi"] / close
             mm = {"date": raw["date"], "ok": raw.get("ok", False),
                   "pct_of_spot": round(raw["pure_g"] / spot_g * 100, 1),
                   "prices": raw["prices"],
@@ -183,9 +202,6 @@ def main():
 
     if not reasons:
         reasons.append("None of the tested indicators is giving a proven edge today, so there's nothing to act on")
-
-    bt_path = OUT / "backtest.json"
-    bt = json.loads(bt_path.read_text()) if bt_path.exists() else None
 
     news, events = None, []
     if not args.selftest:
@@ -209,18 +225,22 @@ def main():
                   "change_pct": round(float(last["ret_1"]) * 100, 2)},
         "today": move,
         "reasons": reasons,
+        # Everything below is £ per gram of pure (24ct) gold
         "levels": {
-            "expected_low": round(close - atr, 2), "expected_high": round(close + atr, 2),
-            "high_20d": round(float(hi.iloc[-20:].max()), 2), "low_20d": round(float(lo.iloc[-20:].min()), 2),
-            "sma50": round(float(g["close"].iloc[-50:].mean()), 2), "sma200": round(float(g["close"].iloc[-200:].mean()), 2),
-            "high_52w": round(float(hi.iloc[-252:].max()), 2),
+            "high_20d": gram(hi.iloc[-20:].max()), "low_20d": gram(lo.iloc[-20:].min()),
+            "sma50": gram(g["close"].iloc[-50:].mean()), "sma200": gram(g["close"].iloc[-200:].mean()),
+            "high_52w": gram(hi.iloc[-252:].max()),
         },
+        "ranges": {k: {"lo": gram(v["lo"]), "hi": gram(v["hi"])} for k, v in rng.items()},
+        "ranges_hit": {k: v["hit"] for k, v in ((bt or {}).get("ranges") or {}).items()},
+        "atr_pct": round(atr / close, 5),
+        "plan": plan,
         "rsi14": round(float(last["rsi14"]), 1),
         "mastermelt": mm,
         "news": news,
         "news_status": NEWS_STATUS,
         "events": events,
-        "spark": [[d.date().isoformat(), round(float(v), 2)] for d, v in g["close"].iloc[-90:].items()],
+        "spark": [[d.date().isoformat(), gram(v)] for d, v in g["close"].iloc[-90:].items()],
     }
     if events:
         latest["reasons"].append(f"Big announcement due: {events[0]['country']} {events[0]['title']}. Expect a bigger swing either way")

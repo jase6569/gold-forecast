@@ -24,6 +24,7 @@ from engine import data as D
 from engine.backtest import (evaluate_predictions, information_coefficients, rule_verdict,
                              test_rules, walk_forward)
 from engine.features import build_features, build_targets, feature_columns
+from engine import ranges as RG, strategy as ST
 
 ROOT = Path(__file__).resolve().parent
 
@@ -151,6 +152,17 @@ def build_report(series, f, rules, ic, preds, ev, selftest: bool) -> str:
                    f"on average. On \"hold\" days it moved {ev['hold_days_avg_next_pct']:+.3f}%. "
                    f"The average day was {ev['all_days_avg_next_pct']:+.3f}%.</p>")
 
+    def rule_text(r):
+        bits = []
+        if r["lock_if_up_chance_below"] is not None: bits.append(f"forecast under {r['lock_if_up_chance_below']:.0%} up")
+        if r["take_profit_ranges"] is not None: bits.append(f"price up {r['take_profit_ranges']}x a normal day")
+        if r["protect_ranges"] is not None: bits.append(f"price down {r['protect_ranges']}x a normal day")
+        return "Lock in when " + (" or ".join(bits) if bits else "the deadline arrives")
+    strat = ev["strategy"]; firm = ev["firm"]; rng = ev["ranges"]
+    strat_rows = "".join(
+        f"<tr><td>{v['window_days']} days</td><td>{rule_text(v['rule'])}</td>"
+        f"<td>£{v['rule_unseen']['per_10k']:+.0f}</td><td>£{v['sell_at_end_unseen']['per_10k']:+.0f}</td>"
+        f"<td>{pct(v['rule_unseen']['beats_sell_now'])}</td></tr>" for v in strat.values())
     css = """body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:900px;margin:24px auto;padding:0 16px;color:#222;line-height:1.5}
 h1{font-size:24px;margin-bottom:4px}h2{font-size:18px;margin-top:32px;border-bottom:2px solid #a07a1c;padding-bottom:4px}
 table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:6px 8px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
@@ -171,6 +183,11 @@ th{background:#faf6ec}small{color:#888}tr.good td{background:#eef7ee}tr.maybe td
 <p>Retrained each year using only earlier years, then scored on a year it had never seen. {ev['n_days']:,} days scored in total.</p>
 <table><tr><th>Signal strength</th><th>Days</th><th>Right</th><th>Avg next-day move</th></tr>{band_rows}</table>
 <img src="data:image/png;base64,{year_png}">
+<h2>When to sell: lock in now, or wait?</h2>
+<p>Each rule was tuned on the first half of the tested years, then scored on the second half, which it never saw. Results are per £10,000 of gold, compared with selling straight away.</p>
+<table><tr><th>Must sell within</th><th>Best rule</th><th>Rule</th><th>Wait to deadline</th><th>Beats selling now</th></tr>{strat_rows}</table>
+<p>Firm calls (the 10% most confident nights): up calls right {pct(firm['firm_up_right'])} of the time over {firm['firm_up_days']} nights, down calls right {pct(firm['firm_down_right'])} over {firm['firm_down_days']} nights. Gold rose on {pct(firm['all_days_up_rate'])} of all days.</p>
+<p>Price ranges aimed to catch the real price 75% of the time. Tomorrow's range did so {pct(rng['h1']['hit'])} of the time, and the 5-day range {pct(rng['h5']['hit'])}.</p>
 <h2>What this means for the app</h2>
 <p>Only signals that passed here go into the evening forecast. The app shows a firm "sell tomorrow" or "hold" on strong-signal days and says "no clear call" the rest of the time, rather than guessing.</p>
 </body></html>"""
@@ -206,6 +223,10 @@ def main():
     preds5 = walk_forward(f, cols, t["up_5"], t["fwd_ret_5"], horizon=5)
     ev5 = evaluate_predictions(preds5, t["fwd_ret_5"])
     ev["h5"] = ev5
+    strat = ST.evaluate(f["close"], preds["ensemble"], f["atr14_pct"].fillna(f["vol_20"]))
+    firm = ST.firm_call_thresholds(preds["ensemble"], t["up_1"])
+    rng = RG.backtest(f["close"])
+    ev["strategy"], ev["firm"], ev["ranges"] = strat, firm, rng
 
     out = Path(args.out) if args.out else ROOT / "reports" / ("selftest.html" if args.selftest else "stage1_report.html")
     out.parent.mkdir(exist_ok=True)
@@ -223,6 +244,7 @@ def main():
         (web / "data" / "backtest.json").write_text(json.dumps({
             "generated": date.today().isoformat(), "from": str(f.index[0].date()), "to": str(f.index[-1].date()),
             "h1": pack(ev), "h5": pack(ev5),
+            "strategy": strat, "firm": firm, "ranges": rng,
             "rules_passing": [r.description for r in rules if rule_verdict(r) == "Works, and held up"],
         }, indent=1, default=float))
 

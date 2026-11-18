@@ -52,13 +52,14 @@ a{color:var(--gold)}
 .big{font-size:26px;font-weight:700}
 .warn{background:#fdecea;color:#7a2418;padding:10px 12px;border-radius:10px;font-size:13px;margin-bottom:12px}
 svg{display:block;width:100%;height:80px}
+input,select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 6px;background:#fff;color:var(--ink)}
 footer{text-align:center;font-size:12px;color:var(--muted);padding:8px 20px}
 </style>
 </head>
 <body>
 <header>
   <div class="row"><h1>UK Gold Forecast</h1><span class="date" id="date">Loading…</span></div>
-  <div class="price" id="price">£–</div>
+  <div class="price" id="price">£– /g</div>
   <div class="per"><span id="gram"></span> <span id="chg" class="chg"></span></div>
 </header>
 <main id="app"><div class="card">Loading tonight's forecast…</div></main>
@@ -85,9 +86,9 @@ function meter(label, p, right){
 }
 
 function blurb(L){
-  if(L.call==='HOLD') return 'The odds lean towards a higher price tomorrow. Holding looks the better bet.';
-  if(L.call==='SELL TOMORROW') return 'The odds lean towards a softer price tomorrow. Selling sooner rather than later looks sensible.';
-  return 'No proven edge either way tonight. Sell or hold on your normal routine.';
+  if(L.call==='LOCK IN') return 'The odds lean towards a lower price tomorrow. Fixing your price with your dealer now looks the better move.';
+  if(L.call==='WAIT') return 'The odds lean towards a higher price tomorrow. Waiting a day looks the better move.';
+  return 'No proven edge either way tonight. Stick to your batch plan below, or sell on your usual day.';
 }
 
 function track(H){
@@ -95,55 +96,105 @@ function track(H){
   const recent=(H||[]).slice(-15).reverse();
   if(!recent.length) return '<p class="small">The track record starts filling in after the first few evenings.</p>';
   const wins=done.filter(h=>h.right).length;
-  const head=done.length?`<div><span class="big">${pc(wins/done.length)}</span> <span class="small">right on ${done.length} scored calls (each judged on the next day's close)</span></div>`:'';
+  const head=done.length?`<div><span class="big">${pc(wins/done.length)}</span> <span class="small">right on ${done.length} firm or lean calls (judged on the next day's price)</span></div>`:'';
+  const name=c=>({'SELL TOMORROW':'lock in','HOLD':'wait','NO CLEAR CALL':'no view'}[c]||c.toLowerCase());
   return head+'<div class="track">'+recent.map(h=>{
-    const mark=h.right===true?'<span class="ok">✓ Right</span>':h.right===false?'<span class="bad">✗ Wrong</span>':h.call==='NO CLEAR CALL'?'<span class="pend">No call</span>':'<span class="pend">Waiting</span>';
-    return `<div class="row"><span>${h.date}</span><span>${esc(h.call.toLowerCase())}</span><span>${gbp(h.close)}</span>${mark}</div>`}).join('')+'</div>';
+    const mark=h.right===true?'<span class="ok">✓ Right</span>':h.right===false?'<span class="bad">✗ Wrong</span>':/NO /.test(h.call)?'<span class="pend">No call</span>':'<span class="pend">Waiting</span>';
+    return `<div class="row"><span>${h.date.slice(5)}</span><span>${esc(name(h.call))}</span><span>${gbp(h.close/31.1035,2)}/g</span>${mark}</div>`}).join('')+'</div>';
+}
+
+function money(L,H,B){
+  // Live: £ per £10,000 from following the calls (lock in before a fall = gain; wait before a rise = gain)
+  const sc=(H||[]).filter(h=>h.next_ret!==undefined);
+  let live=0,n=0;
+  sc.forEach(h=>{ if(/LOCK|SELL/.test(h.call)){live+=-h.next_ret;n++} else if(/WAIT|HOLD/.test(h.call)){live+=h.next_ret;n++} });
+  const liveTxt=n?`<p style="margin:0 0 8px"><span class="big">${live>=0?'+':'−'}${gbp(Math.abs((Math.exp(live)-1)*10000))}</span> <span class="small">per £10,000 of gold from following ${n} live calls so far</span></p>`:'<p class="small" style="margin-top:0">Live money score starts after the first scored calls.</p>';
+  const p=L.plan;
+  const bt=p&&p.rule_per_10k!=null?`<table><tr><td>Following the batch plan</td><td>${p.rule_per_10k>=0?'+':'−'}${gbp(Math.abs(p.rule_per_10k))}</td></tr><tr><td>Always waiting to the deadline</td><td>${p.wait_per_10k>=0?'+':'−'}${gbp(Math.abs(p.wait_per_10k))}</td></tr><tr><td>Selling straight away</td><td>£0</td></tr></table><p class="small">Average per £10,000 batch with a ${p.window_days}-day deadline, on years the rules never saw while being tuned.</p>`:'';
+  return liveTxt+bt;
+}
+
+function batch(L,B){
+  let st={};try{st=JSON.parse(localStorage.getItem('batch')||'{}')}catch(e){}
+  const today=L.price_date, start=st.start||today, win=String(st.win||5);
+  const S=(B&&B.strategy&&B.strategy[win])||null, rule=S?S.rule:(L.plan&&L.plan.rule)||{};
+  const pts=L.spark.filter(p=>p[0]>=start);
+  const startP=pts.length?pts[0][1]:L.price.per_gram, now=L.price.per_gram;
+  const elapsed=Math.max(0,pts.length-1), left=Number(win)-elapsed;
+  const a=L.atr_pct||0.01, k=rule&&rule.take_profit_ranges, s=rule&&rule.protect_ranges;
+  const target=k?startP*(1+k*a):null, protect=s?startP*(1-s*a):null;
+  let act,why;
+  if(left<=0){act='Lock in today';why='Your deadline has arrived.'}
+  else if(target&&now>=target){act='Lock in today';why='Price has hit your target.'}
+  else if(protect&&now<=protect){act='Lock in today';why='Price has fallen to your protect level. Locking in stops it getting worse.'}
+  else if(L.call==='LOCK IN'){act='Lock in tomorrow morning';why='Tonight\'s forecast leans lower.'}
+  else {act='Wait';why=`Check again tomorrow evening. ${left} trading day${left===1?'':'s'} left.`}
+  const mm=L.mastermelt&&L.mastermelt.prices, f=mm?mm['9ct']/L.price.per_gram:null;
+  const both=v=>`${gbp(v,2)}/g 24ct${f?` · ${gbp(v*f,2)}/g 9ct`:''}`;
+  return `<div class="big" style="font-size:22px">${act}</div><p style="margin:4px 0 10px">${why}</p>
+  <table>
+   <tr><td>Batch ready since</td><td><input type="date" id="bStart" value="${start}" max="${today}"></td></tr>
+   <tr><td>Must sell within</td><td><select id="bWin">${[3,5,10].map(n=>`<option ${String(n)===win?'selected':''} value="${n}">${n} trading days</option>`).join('')}</select></td></tr>
+   <tr><td>Price when ready</td><td>${both(startP)}</td></tr>
+   ${target?`<tr><td>Lock-in target</td><td>${both(target)}</td></tr>`:''}
+   ${protect?`<tr><td>Protect level</td><td>${both(protect)}</td></tr>`:''}
+  </table>
+  <p class="small">Targets come from the rule that tested best for a ${win}-day deadline. Your batch settings stay on this phone.</p>`;
 }
 
 async function load(){
   const [L,H,B,M]=await Promise.all([get('data/latest.json'),get('data/history.json'),get('data/backtest.json'),get('data/mastermelt.json')]);
-  // Morning refresh: use Mastermelt's newer counter price if it has come in since the evening run
-  if(L&&M&&M.prices&&(!L.mastermelt||M.date>L.mastermelt.date)){
-    const lo=L.levels.expected_low/L.price.per_oz,hi=L.levels.expected_high/L.price.per_oz;
+  const app=document.getElementById('app');
+  if(!L){app.innerHTML='<div class="card">No forecast yet. The first one arrives after tonight\'s run.</div>';return}
+  if(M&&M.prices&&(!L.mastermelt||M.date>L.mastermelt.date)){
+    const r=L.ranges&&L.ranges.h1, lo=r?r.lo/L.price.per_gram:0.99, hi=r?r.hi/L.price.per_gram:1.01;
     L.mastermelt={date:M.date,ok:M.ok,pct_of_spot:(M.pure_g/L.price.per_gram*100).toFixed(1),prices:M.prices,
       tomorrow:Object.fromEntries(Object.entries(M.prices).map(([k,v])=>[k,[v*lo,v*hi]]))};
   }
-  const app=document.getElementById('app');
-  if(!L){app.innerHTML='<div class="card">No forecast yet. The first one arrives after tonight\'s run.</div>';return}
-  const cls=L.call==='HOLD'?'HOLD':L.call==='SELL TOMORROW'?'SELL':'NONE';
+  const cls=L.call==='WAIT'||L.call==='HOLD'?'HOLD':L.call==='LOCK IN'||L.call==='SELL TOMORROW'?'SELL':'NONE';
+  const mm=L.mastermelt&&L.mastermelt.prices;
   document.getElementById('date').textContent='Prices to '+new Date(L.price_date).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
-  document.getElementById('price').textContent=gbp(L.price.per_oz)+' /oz';
-  document.getElementById('gram').textContent=gbp(L.price.per_gram,2)+' per gram (24ct)';
+  document.getElementById('price').textContent=gbp(L.price.per_gram,2)+' /g';
+  document.getElementById('gram').textContent=mm?`24ct · Mastermelt 9ct ${gbp(mm['9ct'],2)} · 18ct ${gbp(mm['18ct'],2)}`:'24ct per gram';
   const c=document.getElementById('chg');c.textContent=(L.price.change_pct>=0?'▲ ':'▼ ')+Math.abs(L.price.change_pct).toFixed(2)+'% today';c.className='chg '+(L.price.change_pct>=0?'up':'down');
-  const lv=L.levels,n=L.news;
+  const lv=L.levels,n=L.news,R=L.ranges||{},RH=L.ranges_hit||{},F=L.plan&&L.plan.firm;
+  const pg=v=>gbp(v>500?v/31.1035:v,2);
   app.innerHTML=`
   ${L.selftest?'<div class="warn">Test data only. Real forecasts start after the first live run.</div>':''}
-  <div class="card verdict ${cls}"><div class="label">Tomorrow</div><div class="call">${esc(L.call)}</div>
-    <div class="strength">${L.strength?esc(L.strength)+' signal':''}</div><p>${blurb(L)}</p></div>
-  <div class="card"><h2>How sure</h2>${meter('Tomorrow',L.prob_up_tomorrow,L.backtest_right_tomorrow)}<p class="small" style="margin:0">Gold rises on about 52% of days, so anything near the middle line is no real edge.</p></div>
+  <div class="card verdict ${cls}"><div class="label">Tonight's call</div><div class="call">${esc(L.call)}</div>
+    <div class="strength">${L.strength==='Strong'?'Firm call':L.strength==='Lean'?'Lean':''}</div><p>${blurb(L)}</p></div>
+  <div class="card"><h2>My batch</h2><div id="batch">${batch(L,B)}</div></div>
+  ${L.mastermelt?`<div class="card"><h2>Mastermelt prices</h2><table>
+    <tr><td class="small">Carat</td><td class="small">Today</td><td class="small">Likely tomorrow</td></tr>
+    ${Object.entries(L.mastermelt.prices).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${gbp(v,2)}</td><td>${gbp(L.mastermelt.tomorrow[k][0],2)} to ${gbp(L.mastermelt.tomorrow[k][1],2)}</td></tr>`).join('')}</table>
+    <p class="small">Per gram. Mastermelt's trade counter price from ${esc(L.mastermelt.date)}, about ${L.mastermelt.pct_of_spot}% of the live gold price.${L.mastermelt.ok?'':' Their page couldn\'t be read, so this is the last good price.'} The likely range catches the real price about 3 times in 4.</p></div>`:''}
+  <div class="card"><h2>Likely price range (24ct per gram)</h2><table>
+    ${R.h1?`<tr><td>Tomorrow</td><td>${gbp(R.h1.lo,2)} to ${gbp(R.h1.hi,2)}</td></tr>`:''}
+    ${R.h5?`<tr><td>Within a week</td><td>${gbp(R.h5.lo,2)} to ${gbp(R.h5.hi,2)}</td></tr>`:''}</table>
+    <p class="small">${RH.h1?`Tested since 2008: tomorrow's range caught the real price ${pc(RH.h1)} of the time, the week range ${pc(RH.h5)}.`:'Aimed to catch the real price 3 times in 4.'}</p></div>
+  <div class="card"><h2>How sure</h2>${meter('Tomorrow',L.prob_up_tomorrow,L.backtest_right_tomorrow)}
+    <p class="small" style="margin:0">${F?`Firm calls are the most confident 10% of nights. In testing, firm "wait" calls were right ${pc(F.firm_up_right)} of the time and firm "lock in" calls ${pc(F.firm_down_right)}. Gold rose on ${pc(F.all_days_up_rate)} of all days.`:'Gold rises on about 52% of days, so anything near the middle line is no real edge.'}</p></div>
+  <div class="card"><h2>Money score</h2>${money(L,H,B)}</div>
   <div class="card"><h2>Why</h2><ul class="reasons">${L.reasons.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
     ${L.today.length?`<p class="small" style="margin-top:10px">${esc(L.today[0])}</p>`:''}</div>
-  ${L.mastermelt?`<div class="card"><h2>Mastermelt prices</h2><table>
-    <tr><td class="small">Carat</td><td class="small" style="text-align:right">Counter price today</td><td class="small" style="text-align:right">Likely tomorrow</td></tr>
-    ${Object.entries(L.mastermelt.prices).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${gbp(v,2)}/g</td><td>${gbp(L.mastermelt.tomorrow[k][0],2)} to ${gbp(L.mastermelt.tomorrow[k][1],2)}</td></tr>`).join('')}</table>
-    <p class="small">Mastermelt's trade counter price from ${esc(L.mastermelt.date)}, about ${L.mastermelt.pct_of_spot}% of the live gold price.${L.mastermelt.ok?'':' Their page couldn\'t be read tonight, so this is the last good price.'} Tomorrow's range follows the gold price; Mastermelt sets its new price each morning.</p></div>`:''}
-  <div class="card"><h2>Levels to watch</h2><table>
-    <tr><td>Likely range tomorrow</td><td>${gbp(lv.expected_low)} to ${gbp(lv.expected_high)}</td></tr>
-    <tr><td>20-day high</td><td>${gbp(lv.high_20d)}</td></tr>
-    <tr><td>20-day low</td><td>${gbp(lv.low_20d)}</td></tr>
-    <tr><td>50-day average</td><td>${gbp(lv.sma50)}</td></tr>
-    <tr><td>200-day average</td><td>${gbp(lv.sma200)}</td></tr>
-    <tr><td>1-year high</td><td>${gbp(lv.high_52w)}</td></tr>
+  <div class="card"><h2>Levels to watch (24ct per gram)</h2><table>
+    <tr><td>20-day high</td><td>${pg(lv.high_20d)}</td></tr>
+    <tr><td>20-day low</td><td>${pg(lv.low_20d)}</td></tr>
+    <tr><td>50-day average</td><td>${pg(lv.sma50)}</td></tr>
+    <tr><td>200-day average</td><td>${pg(lv.sma200)}</td></tr>
+    <tr><td>1-year high</td><td>${pg(lv.high_52w)}</td></tr>
     <tr><td>RSI (14)</td><td>${L.rsi14}</td></tr></table></div>
-  <div class="card"><h2>Last 90 days</h2>${spark(L.spark)}</div>
+  <div class="card"><h2>Last 90 days (24ct per gram)</h2>${spark(L.spark.map(p=>[p[0],p[1]>500?p[1]/31.1035:p[1]]))}</div>
   ${L.events&&L.events.length?`<div class="card"><h2>Big announcements due</h2><table>${L.events.map(e=>`<tr><td>${esc(e.country)} ${esc(e.title)}</td><td>${new Date(e.when_utc).toLocaleString('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit'})}</td></tr>`).join('')}</table><p class="small">These can swing the price sharply either way.</p></div>`:''}
   ${n?`<div class="card"><h2>Today's news <span class="tone ${esc(n.tone)}">${esc(n.tone)}</span></h2><p style="margin-top:0">${esc(n.summary)}</p>
     <div class="heads">${(n.headlines||[]).map(h=>`<a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a>`).join('')}</div>
     <p class="small">News is shown for context. It isn't part of the tested model.</p></div>`:''}
   <div class="card"><h2>Track record</h2>${track(H)}</div>
-  ${B?`<div class="card"><h2>Backtest</h2><p style="margin:0 0 6px">Tested on daily gold in pounds, ${esc(B.from.slice(0,4))} to ${esc(B.to.slice(0,4))}. Tomorrow's direction right <b>${pc(B.h1.accuracy)}</b> of the time, against ${pc(B.h1.always_up)} for always saying up.</p><a href="report.html">Full backtest report</a></div>`:''}
+  ${B?`<div class="card"><h2>Backtest</h2><p style="margin:0 0 6px">Tested on daily gold in pounds, ${esc(B.from.slice(0,4))} to ${esc(B.to.slice(0,4))}, never on years it was trained on.</p><a href="report.html">Full backtest report</a></div>`:''}
   <p class="small" style="text-align:center">Updated ${new Date(L.generated_utc).toLocaleString('en-GB')}</p>`;
+  const save=()=>{try{localStorage.setItem('batch',JSON.stringify({start:document.getElementById('bStart').value,win:document.getElementById('bWin').value}))}catch(e){};document.getElementById('batch').innerHTML=batch(L,B);wire()};
+  const wire=()=>{['bStart','bWin'].forEach(id=>{const el=document.getElementById(id);if(el)el.onchange=save})};
+  wire();
 }
 load();
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
