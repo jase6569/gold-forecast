@@ -1,49 +1,49 @@
 {
- "generated_utc": "2026-11-18T13:37+00:00",
+ "generated_utc": "2026-11-18T14:37+00:00",
  "price_date": "2026-11-18",
  "selftest": false,
  "call": "NO STRONG VIEW",
  "strength": "",
- "prob_up_tomorrow": 0.5846,
- "prob_up_5d": 0.5836,
+ "prob_up_tomorrow": 0.5811,
+ "prob_up_5d": 0.5823,
  "backtest_right_tomorrow": 0.5598526703499079,
  "backtest_right_5d": 0.5405304445274561,
  "price": {
-  "per_oz": 2868.02,
-  "per_gram": 92.21,
-  "change_pct": -2.17
+  "per_oz": 2871.13,
+  "per_gram": 92.31,
+  "change_pct": -2.06
  },
  "today": [
-  "Gold fell 2.3% in dollars and the pound weakened 0.1%, so in pounds gold fell 2.2%."
+  "Gold fell 2.3% in dollars and the pound weakened 0.2%, so in pounds gold fell 2.1%."
  ],
  "reasons": [
-  "Today's move -2.2%, pointing up",
+  "Today's move -2.1%, pointing up",
   "Gold in dollars, today -2.3%, pointing down",
-  "Close within day's range +0.28, pointing up",
+  "Close within day's range +0.29, pointing up",
   "Big announcement due: GBP BOE Gov Bailey Speaks. Expect a bigger swing either way"
  ],
  "levels": {
   "high_20d": 100.05,
-  "low_20d": 91.44,
-  "sma50": 100.01,
+  "low_20d": 91.49,
+  "sma50": 100.02,
   "sma200": 106.81,
   "high_52w": 130.32
  },
  "ranges": {
   "h1": {
-   "lo": 90.82,
-   "hi": 93.88
+   "lo": 90.93,
+   "hi": 93.97
   },
   "h5": {
-   "lo": 89.49,
-   "hi": 96.27
+   "lo": 89.61,
+   "hi": 96.35
   }
  },
  "ranges_hit": {
   "h1": 0.7522105263157894,
   "h5": 0.7458912768647282
  },
- "atr_pct": 0.02679,
+ "atr_pct": 0.02676,
  "plan": {
   "window_days": 5,
   "rule": {
@@ -65,11 +65,11 @@
    "current_lo": 0.48138523680924894
   }
  },
- "rsi14": 34.4,
+ "rsi14": 34.6,
  "mastermelt": {
   "date": "2026-11-18",
   "ok": true,
-  "pct_of_spot": 96.8,
+  "pct_of_spot": 96.7,
   "prices": {
    "9ct": 33.47,
    "14ct": 52.21,
@@ -83,61 +83,61 @@
     34.07
    ],
    "14ct": [
-    51.42,
+    51.43,
     53.15
    ],
    "18ct": [
-    65.93,
-    68.15
+    65.94,
+    68.14
    ],
    "22ct": [
     80.52,
-    83.23
+    83.22
    ],
    "24ct": [
-    87.9,
-    90.86
+    87.91,
+    90.85
    ]
   }
  },
  "news": {
   "tone": "negative",
-  "summary": "Gold has fallen sharply, hitting a 13-month low after a broad sell-off. The decline coincides with a stronger US dollar and hawkish signals from the Federal Reserve.",
+  "summary": "Gold has fallen sharply to year\u2011plus lows over the past month. The drop looks driven by a stronger dollar and market sell\u2011offs, although Chinese demand shows some support.",
   "drivers": [
-   "Stronger US dollar",
-   "Hawkish Fed / higher rate expectations",
-   "Broad metals and crypto sell-off"
+   "Hawkish Fed / dollar rally",
+   "Broad market sell\u2011off (crypto drop)",
+   "Robust Chinese demand"
   ],
   "headlines": [
    {
-    "title": "Gold price today: Gold falls 2.02% on November 18, 2026",
+    "title": "Gold Price Today: Gold Falls 1.73% on November 18, 2026",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2finvestment%2fgold-price-today-gold-falls-2-02-on-november-18-2026%2far-AA2hGEiK&c=4961398644371970150&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdb80a29eb464f855082006d891fa8&url=https%3a%2f%2fwww.usatoday.com%2fstory%2fmoney%2finvesting%2f2026%2f11%2f18%2fgold-price-on-november-18-2026%2f92840370007%2f&c=18191276612124011576&mkt=en-us"
+   },
+   {
+    "title": "The price of gold today, Nov. 18, 2026 \u2014 and the best places to buy",
+    "source": "www.bing.com",
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdb80a29eb464f855082006d891fa8&url=https%3a%2f%2fwww.cnbc.com%2fselect%2fthe-price-of-gold-today-nov-18-2026%2f&c=14000309382172860853&mkt=en-us"
+   },
+   {
+    "title": "Gold price today, Wednesday, November 18, 2026: Gold prices open again at year-plus lows, falling further",
+    "source": "www.bing.com",
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdb80a29eb464f855082006d891fa8&url=https%3a%2f%2ffinance.yahoo.com%2fpersonal-finance%2finvesting%2farticle%2fgold-price-today-wednesday-november-18-2026-gold-prices-open-again-at-year-plus-lows-falling-further-121513940.html&c=8589165977175403636&mkt=en-us"
+   },
+   {
+    "title": "Gold Price Today on November 17, 2026",
+    "source": "www.bing.com",
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdb80a29eb464f855082006d891fa8&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2fgeneral%2fgold-price-today-on-november-17-2026%2far-AA2hD5hK&c=4221719586567380983&mkt=en-us"
    },
    {
     "title": "BTC Price Drops 15% as Gold and Silver Dump: Can December\u2019s Fed Decision Turn It?",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcrypto%2farticles%2fbtc-price-drops-15-gold-093459090.html&c=13387336568634802313&mkt=en-us"
-   },
-   {
-    "title": "Gold price today on November 17, 2026",
-    "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2fgeneral%2fgold-price-today-on-november-17-2026%2far-AA2hD5hK&c=4221719586567380983&mkt=en-us"
-   },
-   {
-    "title": "Why gold and silver prices have fallen to their lowest in over a year",
-    "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2fwww.msn.com%2fen-sg%2fnews%2fother%2fwhy-gold-and-silver-prices-have-fallen-to-their-lowest-in-over-a-year%2far-AA2hCMAm&c=9421143410276981296&mkt=en-us"
-   },
-   {
-    "title": "Gold price crashes: Why are gold rate, silver down to over one year low?",
-    "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2feconomictimes.indiatimes.com%2fworld%2fus%2fgold-price-crashes-why-are-gold-rate-silver-down-to-over-one-year-low%2farticleshow%2f135964411.cms&c=15997192379470766420&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdb80a29eb464f855082006d891fa8&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcrypto%2farticles%2fbtc-price-drops-15-gold-093459090.html&c=13387336568634802313&mkt=en-us"
    },
    {
     "title": "Gold drops 2% to over one-year low as hawkish Fed signals boost dollar",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdaa12a6ce45ddbdd06e049d23332b&url=https%3a%2f%2fwww.cnbc.com%2f2026%2f11%2f18%2fgold-slides-to-over-one-year-low-on-firm-dollar-us-rate-outlook.html&c=12813295345829316409&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6afdb80a29eb464f855082006d891fa8&url=https%3a%2f%2fwww.cnbc.com%2f2026%2f11%2f18%2fgold-slides-to-over-one-year-low-on-firm-dollar-us-rate-outlook.html&c=12813295345829316409&mkt=en-us"
    }
   ]
  },
@@ -513,7 +513,7 @@
   ],
   [
    "2026-11-18",
-   92.21
+   92.31
   ]
  ]
 }
