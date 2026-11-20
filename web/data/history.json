@@ -16,6 +16,17 @@
   "strength": "",
   "close": 2820.63,
   "p1": 0.5886,
-  "p5": 0.5924
+  "p5": 0.5924,
+  "next_ret": -0.031738,
+  "next_close": 2715.8,
+  "scored": true
+ },
+ {
+  "date": "2026-11-20",
+  "call": "WAIT",
+  "strength": "Strong",
+  "close": 2715.8,
+  "p1": 0.6173,
+  "p5": 0.5925
  }
 ]
