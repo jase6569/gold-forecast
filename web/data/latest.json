@@ -1,48 +1,48 @@
 {
- "generated_utc": "2026-11-20T03:07+00:00",
+ "generated_utc": "2026-11-21T03:17+00:00",
  "price_date": "2026-11-20",
  "selftest": false,
  "call": "WAIT",
  "strength": "Strong",
- "prob_up_tomorrow": 0.6173,
- "prob_up_5d": 0.5925,
+ "prob_up_tomorrow": 0.623,
+ "prob_up_5d": 0.5951,
  "backtest_right_tomorrow": 0.5598526703499079,
  "backtest_right_5d": 0.5405304445274561,
  "price": {
-  "per_oz": 2715.8,
-  "per_gram": 87.31,
-  "change_pct": -3.17
+  "per_oz": 2704.33,
+  "per_gram": 86.95,
+  "change_pct": -3.6
  },
  "today": [
-  "Gold fell 3.6% in dollars and the pound weakened 0.4%, so in pounds gold fell 3.2%."
+  "Gold fell 4.1% in dollars and the pound weakened 0.5%, so in pounds gold fell 3.6%."
  ],
  "reasons": [
-  "Today's move -3.2%, pointing up",
-  "Gold in dollars, today -3.6%, pointing down",
-  "Close within day's range +0.26, pointing up"
+  "Today's move -3.6%, pointing up",
+  "Gold in dollars, today -4.1%, pointing down",
+  "Close within day's range +0.27, pointing up"
  ],
  "levels": {
   "high_20d": 100.05,
-  "low_20d": 86.6,
-  "sma50": 99.35,
+  "low_20d": 86.07,
+  "sma50": 99.34,
   "sma200": 106.54,
   "high_52w": 130.32
  },
  "ranges": {
   "h1": {
-   "lo": 85.79,
-   "hi": 89.13
+   "lo": 85.39,
+   "hi": 88.8
   },
   "h5": {
-   "lo": 84.32,
-   "hi": 91.74
+   "lo": 83.89,
+   "hi": 91.48
   }
  },
  "ranges_hit": {
   "h1": 0.7522105263157894,
   "h5": 0.7458912768647282
  },
- "atr_pct": 0.02952,
+ "atr_pct": 0.03009,
  "plan": {
   "window_days": 5,
   "rule": {
@@ -64,79 +64,79 @@
    "current_lo": 0.48138523680924894
   }
  },
- "rsi14": 25.9,
+ "rsi14": 25.4,
  "mastermelt": {
-  "date": "2026-11-20",
+  "date": "2026-11-21",
   "ok": true,
-  "pct_of_spot": 100.6,
+  "pct_of_spot": 97.6,
   "prices": {
-   "9ct": 32.95,
-   "14ct": 51.4,
-   "18ct": 65.9,
-   "22ct": 80.48,
-   "24ct": 87.87
+   "9ct": 31.82,
+   "14ct": 49.64,
+   "18ct": 63.64,
+   "22ct": 77.73,
+   "24ct": 84.86
   },
   "tomorrow": {
    "9ct": [
-    32.37,
-    33.63
+    31.25,
+    32.5
    ],
    "14ct": [
-    50.5,
-    52.47
+    48.75,
+    50.7
    ],
    "18ct": [
-    64.75,
-    67.27
+    62.5,
+    65.0
    ],
    "22ct": [
-    79.07,
-    82.15
+    76.33,
+    79.39
    ],
    "24ct": [
-    86.33,
-    89.69
+    83.34,
+    86.67
    ]
   }
  },
  "news": {
   "tone": "negative",
-  "summary": "Headlines show gold has fallen sharply to multi-month lows amid fears of higher US interest rates. The market tone is weak, with large drops in gold and silver and heavy selling pressure.",
+  "summary": "Gold is plunging and has hit its lowest levels in over a year. Markets point to rising rate expectations, heavy ETF selling and an AI-led market rout as the main reasons.",
   "drivers": [
-   "Fed rate\u2011hike concerns",
-   "Strong US dollar",
-   "Broad precious\u2011metal sell\u2011off"
+   "Rising rate expectations / higher real yields",
+   "ETF sell\u2011off / heavy outflows",
+   "AI\u2011led market rout / broad selling pressure"
   ],
   "headlines": [
    {
-    "title": "Gold, Silver Plunge Further Amid Fed Rate Hike Concerns: Buy The Dip Or Brace For More Pain?",
+    "title": "Gold Price Today: Gold Falls 2.33% on November 20, 2026",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6affb9763acc4f948558436cfc7b440f&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcommodities%2farticles%2fgold-silver-plunge-further-amid-015100178.html&c=8922180476734476948&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b010d4831cc4f859034e4a45629c6dc&url=https%3a%2f%2fwww.usatoday.com%2fstory%2fmoney%2finvesting%2f2026%2f11%2f20%2fgold-price-on-november-20-2026%2f92874871007%2f&c=4618970257799845209&mkt=en-us"
    },
    {
-    "title": "Gold Price Today on November 19, 2026",
+    "title": "What gold's price collapse means for millions of Americans",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6affb9763acc4f948558436cfc7b440f&url=https%3a%2f%2fwww.msn.com%2fen-us%2fnews%2fmoney%2fgold-price-today-on-november-19-2026%2far-AA2hLV0S&c=1954155593304904030&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b010d4831cc4f859034e4a45629c6dc&url=https%3a%2f%2fwww.msn.com%2fen-us%2fnews%2fother%2fwhat-golds-price-collapse-means-for-millions-of-americans%2far-AA2hR2ti&c=2509903533931847162&mkt=en-us"
    },
    {
-    "title": "Gold hits 14-month low as strong dollar, rate bets weigh",
+    "title": "Gold's slide deepens as AI rout, rate-hike bets hurt bullion",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6affb9763acc4f948558436cfc7b440f&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2feconomy%2fgold-hits-14-month-low-as-strong-dollar-rate-bets-weigh%2far-AA2hNh85&c=8222526435846084123&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b010d4831cc4f859034e4a45629c6dc&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2feconomy%2fgold-s-slide-deepens-as-ai-rout-rate-hike-bets-hurt-bullion%2far-AA2hSBht&c=2832053634953606956&mkt=en-us"
    },
    {
-    "title": "Gold's bad year is getting worse. Why its price keeps falling",
+    "title": "The price of gold today, Nov. 20, 2026 \u2014 and the best places to buy",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6affb9763acc4f948558436cfc7b440f&url=https%3a%2f%2fwww.msn.com%2fen-au%2fmoney%2fgeneral%2fgold-s-bad-year-is-getting-worse-why-its-price-keeps-falling%2far-AA2hLWtr&c=17148598728853659657&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b010d4831cc4f859034e4a45629c6dc&url=https%3a%2f%2fwww.cnbc.com%2fselect%2fthe-price-of-gold-today-nov-20-2026%2f&c=18279909239969167865&mkt=en-us"
    },
    {
-    "title": "The price of gold today, Nov. 19, 2026 \u2014 and the best places to buy",
+    "title": "Gold price today, Friday, November 20, 2026: Gold prices continue to fall as rate hike expectations crystallize",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6affb9763acc4f948558436cfc7b440f&url=https%3a%2f%2fwww.cnbc.com%2fselect%2fthe-price-of-gold-today-nov-19-2026%2f&c=8798766310304332660&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b010d4831cc4f859034e4a45629c6dc&url=https%3a%2f%2ffinance.yahoo.com%2fpersonal-finance%2finvesting%2farticle%2fgold-price-today-friday-november-20-2026-gold-prices-continue-to-fall-as-rate-hike-expectations-crystallize-121116915.html&c=12474651033555312424&mkt=en-us"
    },
    {
-    "title": "Gold prices today, Thursday, November 19, 2026: Gold price opened at the lowest level in 14 months",
+    "title": "Gold Falls to 14-Month Low as Fed Rate Hike Expectations Trigger Sharp Weekly Losses",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6affb9763acc4f948558436cfc7b440f&url=https%3a%2f%2ffinance.yahoo.com%2fpersonal-finance%2finvesting%2farticle%2fgold-prices-today-thursday-november-19-2026-gold-price-opened-at-the-lowest-level-in-14-months-122258391.html&c=724193239888505889&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b010d4831cc4f859034e4a45629c6dc&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcommodities%2farticles%2fgold-falls-14-month-low-095119261.html&c=4052414248047177747&mkt=en-us"
    }
   ]
  },
@@ -501,7 +501,7 @@
   ],
   [
    "2026-11-20",
-   87.31
+   86.95
   ]
  ]
 }
