@@ -27,6 +27,18 @@
   "strength": "Strong",
   "close": 2704.33,
   "p1": 0.623,
-  "p5": 0.5951
+  "p5": 0.5951,
+  "next_ret": 0.037329,
+  "next_close": 2788.46,
+  "right": true,
+  "scored": true
+ },
+ {
+  "date": "2026-11-24",
+  "call": "NO STRONG VIEW",
+  "strength": "",
+  "close": 2786.41,
+  "p1": 0.5371,
+  "p5": 0.5681
  }
 ]
