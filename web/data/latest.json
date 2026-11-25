@@ -1,49 +1,49 @@
 {
- "generated_utc": "2026-11-24T05:58+00:00",
- "price_date": "2026-11-24",
+ "generated_utc": "2026-11-25T04:53+00:00",
+ "price_date": "2026-11-25",
  "selftest": false,
  "call": "NO STRONG VIEW",
  "strength": "",
- "prob_up_tomorrow": 0.5371,
- "prob_up_5d": 0.5681,
- "backtest_right_tomorrow": 0.5210477081384471,
+ "prob_up_tomorrow": 0.5748,
+ "prob_up_5d": 0.5626,
+ "backtest_right_tomorrow": 0.5591661557326794,
  "backtest_right_5d": 0.540126913027249,
  "price": {
-  "per_oz": 2786.41,
-  "per_gram": 89.59,
-  "change_pct": -0.07
+  "per_oz": 2709.09,
+  "per_gram": 87.1,
+  "change_pct": -0.86
  },
  "today": [
-  "Gold fell 0.5% in dollars and the pound weakened 0.4%, so in pounds gold fell 0.1%."
+  "Gold fell 0.4% in dollars and the pound strengthened 0.4%, so in pounds gold fell 0.9%."
  ],
  "reasons": [
-  "Close within day's range +0.27, pointing up",
-  "2-day move +3.7%, pointing down",
-  "Gold in dollars, today -0.5%, pointing down",
+  "Today's move -0.9%, pointing up",
+  "Close within day's range +0.34, pointing up",
+  "2-day move -2.9%, pointing up",
   "Big announcement due: USD Core PCE Price Index m/m. Expect a bigger swing either way"
  ],
  "levels": {
   "high_20d": 100.05,
   "low_20d": 86.06,
-  "sma50": 98.77,
-  "sma200": 106.24,
+  "sma50": 98.37,
+  "sma200": 106.07,
   "high_52w": 130.32
  },
  "ranges": {
   "h1": {
-   "lo": 87.84,
-   "hi": 91.69
+   "lo": 85.4,
+   "hi": 89.15
   },
   "h5": {
-   "lo": 86.08,
-   "hi": 94.73
+   "lo": 83.64,
+   "hi": 92.13
   }
  },
  "ranges_hit": {
   "h1": 0.752104377104377,
   "h5": 0.7455770850884583
  },
- "atr_pct": 0.02934,
+ "atr_pct": 0.03082,
  "plan": {
   "window_days": 5,
   "rule": {
@@ -65,79 +65,79 @@
    "current_lo": 0.481388465540539
   }
  },
- "rsi14": 35.9,
+ "rsi14": 31.9,
  "mastermelt": {
-  "date": "2026-11-24",
+  "date": "2026-11-25",
   "ok": true,
-  "pct_of_spot": 96.1,
+  "pct_of_spot": 99.3,
   "prices": {
-   "9ct": 32.27,
-   "14ct": 50.34,
-   "18ct": 64.54,
-   "22ct": 78.83,
-   "24ct": 86.06
+   "9ct": 32.42,
+   "14ct": 50.58,
+   "18ct": 64.84,
+   "22ct": 79.2,
+   "24ct": 86.46
   },
   "tomorrow": {
    "9ct": [
-    31.64,
-    33.03
+    31.79,
+    33.18
    ],
    "14ct": [
-    49.36,
-    51.52
+    49.59,
+    51.77
    ],
    "18ct": [
-    63.28,
-    66.05
+    63.57,
+    66.37
    ],
    "22ct": [
-    77.29,
-    80.68
+    77.65,
+    81.07
    ],
    "24ct": [
-    84.38,
-    88.08
+    84.77,
+    88.5
    ]
   }
  },
  "news": {
   "tone": "neutral",
-  "summary": "Headlines show gold hit a one\u2011year low and has had a rough year. Other reports note a small rebound and bargain buying while analysts warn prices could fall further.",
+  "summary": "Headlines are mixed: some report sharp falls driven by hawkish Fed bets and US inflation data, while others highlight a rebound from 14-month lows. With volatility noted across reports, the outlook for gold in pounds is unclear.",
   "drivers": [
-   "U.S. inflation data",
-   "Analyst warnings of further falls",
-   "Bargain buying / short\u2011term rebound"
+   "Hawkish Fed bets and US inflation data",
+   "Rebound from 14-month lows",
+   "Market volatility"
   ],
   "headlines": [
    {
-    "title": "Gold Price Today on November 23, 2026",
+    "title": "Gold price today: Gold falls 1.80% on November 24, 2026",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b052787ffe54792b3c49a6863941a34&url=https%3a%2f%2fwww.usatoday.com%2fstory%2fmoney%2finvesting%2f2026%2f11%2f23%2fgold-price-on-november-23-2026%2f92922402007%2f&c=3668723176690299912&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0669b3ba6c4cafbfe28e373458f0b6&url=https%3a%2f%2fwww.msn.com%2fen-us%2fnews%2fmoney%2fgold-price-today-on-november-24-2026%2far-AA2i7moo&c=16632005282497375131&mkt=en-us"
    },
    {
-    "title": "The price of gold today, Nov. 23, 2026 \u2014 and the best places to buy",
+    "title": "The price of gold today, Nov. 24, 2026 \u2014 and the best places to buy",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b052787ffe54792b3c49a6863941a34&url=https%3a%2f%2fwww.cnbc.com%2fselect%2fthe-price-of-gold-today-nov-23-2026%2f&c=5588465416599684799&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0669b3ba6c4cafbfe28e373458f0b6&url=https%3a%2f%2fwww.cnbc.com%2fselect%2fthe-price-of-gold-today-nov-24-2026%2f&c=2151602711408315802&mkt=en-us"
    },
    {
-    "title": "Gold prices today, Monday, November 23, 2026: Gold prices opened at lowest point since 9/2/25",
+    "title": "Gold price today, Tuesday, November 24, 2026: Gold prices improve, lift from 14-month lows",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b052787ffe54792b3c49a6863941a34&url=https%3a%2f%2ffinance.yahoo.com%2fpersonal-finance%2finvesting%2farticle%2fgold-prices-today-monday-november-23-2026-gold-prices-opened-at-lowest-point-since-9225-122415220.html&c=10023400211606710238&mkt=en-us"
-   },
-   {
-    "title": "axo Bank's Ole Hansen warns gold prices could fall further",
-    "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b052787ffe54792b3c49a6863941a34&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2feconomy%2faxo-bank-s-ole-hansen-warns-gold-prices-could-fall-further%2far-AA2i4n1u&c=5005449333990975433&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0669b3ba6c4cafbfe28e373458f0b6&url=https%3a%2f%2ffinance.yahoo.com%2fpersonal-finance%2finvesting%2farticle%2fgold-price-today-tuesday-november-24-2026-gold-prices-improve-lift-from-14-month-lows-121821092.html&c=7738923801504201282&mkt=en-us"
    },
    {
     "title": "Gold Rate in Dindigul",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b052787ffe54792b3c49a6863941a34&url=https%3a%2f%2fwww.goodreturns.in%2fgold-rates%2fdindigul.html&c=13034313234152633158&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0669b3ba6c4cafbfe28e373458f0b6&url=https%3a%2f%2fwww.goodreturns.in%2fgold-rates%2fdindigul.html&c=13034313234152633158&mkt=en-us"
    },
    {
-    "title": "Gold ticks up on bargain buying; U.S. inflation data awaited",
+    "title": "Gold and silver price today, November 25: Check rates of 24K, 22K gold in Delhi, Mumbai, Kolkata other cities",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b052787ffe54792b3c49a6863941a34&url=https%3a%2f%2fwww.cnbc.com%2f2026%2f11%2f24%2fgold-bargain-buying-us-inflation-data.html&c=10773497157453328885&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0669b3ba6c4cafbfe28e373458f0b6&url=https%3a%2f%2fwww.moneycontrol.com%2fnews%2fbusiness%2fpersonal-finance%2fgold-and-silver-price-today-november-24-check-rates-of-24k-22k-gold-in-delhi-mumbai-kolkata-other-cities-2-14088383.html&c=5462250906345375552&mkt=en-us"
+   },
+   {
+    "title": "Gold Rate in Tuticorin",
+    "source": "www.bing.com",
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0669b3ba6c4cafbfe28e373458f0b6&url=https%3a%2f%2fwww.goodreturns.in%2fgold-rates%2ftuticorin.html&c=8811572777840607936&mkt=en-us"
    }
   ]
  },
@@ -155,10 +155,6 @@
   }
  ],
  "spark": [
-  [
-   "2026-07-21",
-   97.96
-  ],
   [
    "2026-07-22",
    99.8
@@ -513,7 +509,11 @@
   ],
   [
    "2026-11-24",
-   89.59
+   87.86
+  ],
+  [
+   "2026-11-25",
+   87.1
   ]
  ]
 }
