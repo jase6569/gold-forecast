@@ -1,25 +1,25 @@
 {
- "generated_utc": "2026-11-27T04:12+00:00",
+ "generated_utc": "2026-11-28T03:53+00:00",
  "price_date": "2026-11-27",
  "selftest": false,
  "call": "LOCK IN",
  "strength": "Strong",
- "prob_up_tomorrow": 0.4477,
- "prob_up_5d": 0.5036,
- "backtest_right_tomorrow": 0.5377358490566038,
+ "prob_up_tomorrow": 0.4553,
+ "prob_up_5d": 0.5149,
+ "backtest_right_tomorrow": 0.525,
  "backtest_right_5d": null,
  "price": {
-  "per_oz": 2786.99,
-  "per_gram": 89.6,
-  "change_pct": 3.3
+  "per_oz": 2798.81,
+  "per_gram": 89.98,
+  "change_pct": 3.72
  },
  "today": [
-  "Gold rose 3.3% in dollars and the pound strengthened 0.0%, so in pounds gold rose 3.3%."
+  "Gold rose 3.7% in dollars and the pound weakened 0.0%, so in pounds gold rose 3.7%."
  ],
  "reasons": [
-  "Today's move +3.3%, pointing down",
-  "Gold in dollars, today +3.3%, pointing up",
-  "Close within day's range +0.90, pointing down"
+  "Today's move +3.7%, pointing down",
+  "Gold in dollars, today +3.7%, pointing up",
+  "Close within day's range +0.67, pointing down"
  ],
  "levels": {
   "high_20d": 100.05,
@@ -30,19 +30,19 @@
  },
  "ranges": {
   "h1": {
-   "lo": 87.76,
-   "hi": 91.84
+   "lo": 88.09,
+   "hi": 92.28
   },
   "h5": {
-   "lo": 85.85,
-   "hi": 95.08
+   "lo": 86.14,
+   "hi": 95.59
   }
  },
  "ranges_hit": {
   "h1": 0.752104377104377,
   "h5": 0.7455770850884583
  },
- "atr_pct": 0.03323,
+ "atr_pct": 0.03408,
  "plan": {
   "window_days": 5,
   "rule": {
@@ -64,79 +64,79 @@
    "current_lo": 0.481388465540539
   }
  },
- "rsi14": 40.0,
+ "rsi14": 41.0,
  "mastermelt": {
-  "date": "2026-11-27",
+  "date": "2026-11-28",
   "ok": true,
-  "pct_of_spot": 94.5,
+  "pct_of_spot": 96.9,
   "prices": {
-   "9ct": 31.77,
-   "14ct": 49.56,
-   "18ct": 63.54,
-   "22ct": 77.59,
-   "24ct": 84.72
+   "9ct": 32.71,
+   "14ct": 51.02,
+   "18ct": 65.42,
+   "22ct": 79.9,
+   "24ct": 87.22
   },
   "tomorrow": {
    "9ct": [
-    31.12,
-    32.56
+    32.02,
+    33.54
    ],
    "14ct": [
-    48.54,
-    50.8
+    49.95,
+    52.32
    ],
    "18ct": [
-    62.23,
-    65.13
+    64.05,
+    67.09
    ],
    "22ct": [
-    75.99,
-    79.53
+    78.22,
+    81.94
    ],
    "24ct": [
-    82.97,
-    86.84
+    85.39,
+    89.44
    ]
   }
  },
  "news": {
-  "tone": "neutral",
-  "summary": "Headlines are mixed, with some noting Fed rate\u2011hike fears and dollar pressure while others report steady local prices. There is no clear directional signal from these stories alone.",
+  "tone": "supportive",
+  "summary": "Gold prices are rising sharply across markets today. Some analysts warn a possible Fed rate hike could limit further gains.",
   "drivers": [
-   "Fed rate\u2011hike fears",
-   "Stronger US dollar",
-   "Local retail/India price reports"
+   "Sharp price jumps/surge",
+   "Fed rate\u2011hike concerns",
+   "Regional demand and price spikes (India, Dubai)"
   ],
   "headlines": [
    {
-    "title": "Gold drifts lower as Fed rate-hike fears loom",
+    "title": "Gold Price Today: Gold Rises 3.13% on November 27, 2026",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09033f895a4a69ae1ccd48edfd468e&url=https%3a%2f%2fwww.msn.com%2fen-us%2fmoney%2feconomy%2fgold-drifts-lower-as-fed-rate-hike-fears-loom%2far-AA2igZiQ&c=7044090829755972440&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0a50263b2b4a658bb07792ba4dcd25&url=https%3a%2f%2fwww.msn.com%2fen-us%2fnews%2fmoney%2fgold-price-today-gold-rises-313-on-november-27-2026%2far-AA2imcTt&c=16152351138384473666&mkt=en-us"
    },
    {
-    "title": "Gold Prices Mixed as Stronger US Dollar Pressures Spot Bullion While Futures Advance",
+    "title": "The price of gold today, Nov. 27, 2026 \u2014 and the best places to buy",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09033f895a4a69ae1ccd48edfd468e&url=https%3a%2f%2ffinance.yahoo.com%2fmarkets%2fcommodities%2farticles%2fgold-prices-mixed-stronger-us-095840864.html&c=7813814884511849610&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0a50263b2b4a658bb07792ba4dcd25&url=https%3a%2f%2fwww.cnbc.com%2fselect%2fthe-price-of-gold-today-nov-27-2026%2f&c=9780694858916195705&mkt=en-us"
    },
    {
-    "title": "Gold rate today in Maharashtra cities: Check 22K, 24K prices in Mumbai, Pune, Nagpur and more on Nov 27",
+    "title": "Why are gold and silver prices rising today?",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09033f895a4a69ae1ccd48edfd468e&url=https%3a%2f%2fwww.msn.com%2fen-in%2fmoney%2finvestment%2fgold-rate-today-in-maharashtra-cities-check-22k-24k-prices-in-mumbai-pune-nagpur-and-more-on-nov-27%2far-AA2ik59v&c=552656652431474276&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0a50263b2b4a658bb07792ba4dcd25&url=https%3a%2f%2fwww.financialexpress.com%2fmarket%2fgold-pulse%2fgold-price-today-why-are-precious-metal-prices-rising%2f4395182%2f&c=10715432467030518476&mkt=en-us"
    },
    {
-    "title": "Gold rate today in India (November 27, 2026): 24K, 22K, 18K gold prices; check city-wise rates",
+    "title": "Gold rate today: Check 24K, 22K gold prices in Mumbai, Delhi, Chennai, Kolkata, Bengaluru on November 28",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09033f895a4a69ae1ccd48edfd468e&url=https%3a%2f%2fenglish.mathrubhumi.com%2fnews%2fmoney%2fgold-rate-silver-rate-today-india-november-27-2026-k87mlv4m&c=1213091334714881470&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0a50263b2b4a658bb07792ba4dcd25&url=https%3a%2f%2fwww.msn.com%2fen-in%2fnews%2fother%2fgold-rate-today-check-24k-22k-gold-prices-in-mumbai-delhi-chennai-kolkata-bengaluru-on-november-28%2far-AA2ioT54&c=17676470188163323151&mkt=en-us"
    },
    {
-    "title": "Who Is Vardhaman Jain? Businessman Donates 121 Kg Gold To Tirumala Temple; Check Its Value at Today's Gold Rates",
+    "title": "Gold price forecast: Fed rate hike in December may limit recovery to \u20b91.30 lakh per 10 grams by 2026-end, says expert",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09033f895a4a69ae1ccd48edfd468e&url=https%3a%2f%2fwww.jagranjosh.com%2fgeneral-knowledge%2fwho-is-vardhaman-jain-businessman-donates-121-kg-gold-to-tirumala-temple-check-its-value-at-todays-gold-rates-1820014178-1&c=6921499465528276481&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0a50263b2b4a658bb07792ba4dcd25&url=https%3a%2f%2fwww.msn.com%2fen-in%2fnews%2fother%2fgold-price-forecast-fed-rate-hike-in-december-may-limit-recovery-to-130-lakh-per-10-grams-by-2026-end-says-expert%2far-AA2ilEMY&c=17293293793640486755&mkt=en-us"
    },
    {
-    "title": "Gold Rate in Tuticorin",
+    "title": "Gold price today 27 November 2026: MCX gold rate jumps but still 31% down from record high; is it the right time to buy?",
     "source": "www.bing.com",
-    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b09033f895a4a69ae1ccd48edfd468e&url=https%3a%2f%2fwww.goodreturns.in%2fgold-rates%2ftuticorin.html&c=8811572777840607936&mkt=en-us"
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6b0a50263b2b4a658bb07792ba4dcd25&url=https%3a%2f%2fwww.msn.com%2fen-in%2fmoney%2feconomy%2fgold-price-today-27-november-2026-mcx-gold-rate-jumps-but-still-31-down-from-record-high-is-it-the-right-time-to-buy%2far-AA2ikFtn&c=6578583119304664333&mkt=en-us"
    }
   ]
  },
@@ -501,7 +501,7 @@
   ],
   [
    "2026-11-27",
-   89.6
+   89.98
   ]
  ]
 }
